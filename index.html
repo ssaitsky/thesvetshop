@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Svet Shop — One Shirt. Your Words.</title>
+  <meta name="description" content="One shirt. The softest white cotton you've ever worn. Your mantra on it. That's it. The Svet Shop — 25 years in the making." />
+  <meta property="og:title" content="The Svet Shop" />
+  <meta property="og:description" content="One shirt. The softest white cotton you've ever worn. Your mantra on it." />
+  <meta property="og:image" content="/og-image.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --off-white: #fafaf8;
+      --gray-light: #f2f2ef;
+      --gray-mid: #d4d4ce;
+      --gray-text: #888880;
+      --teal-hint: #0A8A93;
+      --seafoam-hint: #AFDDE5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 2rem;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--black);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--teal-hint); }
+    nav a.nav-link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a.nav-link:hover { color: var(--black); }
+    .nav-buy {
+      background: var(--black);
+      color: var(--white) !important;
+      padding: 0.55rem 1.25rem;
+      border-radius: 2px;
+      letter-spacing: 0.1em;
+      font-size: 0.75rem !important;
+      font-weight: 500 !important;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-buy:hover { background: var(--teal-hint) !important; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+      background: var(--white);
+    }
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--teal-hint);
+      margin-bottom: 2rem;
+    }
+    .hero-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -0.04em;
+      color: var(--black);
+      margin-bottom: 2rem;
+    }
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gray-text);
+      max-width: 480px;
+      line-height: 1.5;
+      margin-bottom: 3rem;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--black);
+      color: var(--white);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 2.5rem;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .hero-cta:hover { background: var(--teal-hint); transform: translateY(-1px); }
+    .hero-scroll {
+      margin-top: 5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* MARQUEE */
+    .marquee-wrap {
+      overflow: hidden;
+      background: var(--black);
+      padding: 1rem 0;
+      white-space: nowrap;
+    }
+    .marquee-track {
+      display: inline-flex;
+      animation: marquee 28s linear infinite;
+    }
+    .marquee-track span {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+      padding: 0 2.5rem;
+    }
+    .marquee-track span.dot { color: var(--teal-hint); padding: 0 0.5rem; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* PRODUCT SECTION */
+    .product {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 90vh;
+      border-top: 1px solid var(--gray-light);
+    }
+    .product-visual {
+      background: var(--gray-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .shirt-mockup {
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 3/4;
+      background: var(--white);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+      padding: 3rem 2rem;
+      transition: all 0.4s ease;
+    }
+    .shirt-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+      margin-bottom: 2rem;
+    }
+    .shirt-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      text-align: center;
+      color: var(--black);
+      transition: all 0.3s ease;
+    }
+    .shirt-byline {
+      margin-top: 2rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+    }
+
+    .product-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem;
+      border-left: 1px solid var(--gray-light);
+    }
+    .product-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--teal-hint);
+      margin-bottom: 1.5rem;
+    }
+    .product-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 1.5rem;
+    }
+    .product-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--gray-text);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      max-width: 380px;
+    }
+
+    /* MANTRA SELECTOR */
+    .mantra-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--black);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+    .mantra-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .mantra-chip {
+      border: 1.5px solid var(--gray-mid);
+      background: transparent;
+      padding: 0.5rem 1rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--black);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .mantra-chip:hover {
+      border-color: var(--black);
+      background: var(--gray-light);
+    }
+    .mantra-chip.active {
+      border-color: var(--black);
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .price {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+    .price-note {
+      font-size: 0.75rem;
+      color: var(--gray-text);
+      letter-spacing: 0.05em;
+    }
+
+    .buy-btn {
+      display: block;
+      width: 100%;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 1.1rem 2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+      text-align: center;
+      text-decoration: none;
+    }
+    .buy-btn:hover { background: var(--teal-hint); transform: translateY(-1px); }
+
+    .product-details {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .detail-row {
+      display: flex;
+      gap: 0.75rem;
+      font-size: 0.78rem;
+      color: var(--gray-text);
+    }
+    .detail-row::before { content: "—"; color: var(--gray-mid); }
+
+    /* QUOTE BREAK */
+    .quote-break {
+      padding: 6rem 2rem;
+      text-align: center;
+      background: var(--off-white);
+      border-top: 1px solid var(--gray-light);
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .big-quote {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 6vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .big-quote .teal { color: var(--teal-hint); }
+
+    /* STORY */
+    .story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--gray-light);
+    }
+    .story-text {
+      padding: 6rem 4rem;
+    }
+    .story-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--teal-hint);
+      margin-bottom: 2rem;
+    }
+    .story-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 2rem;
+    }
+    .story-body {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #444;
+      max-width: 440px;
+    }
+    .story-body p + p { margin-top: 1.25rem; }
+    .story-aside {
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem;
+      text-align: center;
+    }
+    .aside-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(4rem, 10vw, 7rem);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .aside-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+      margin-top: 1rem;
+    }
+    .aside-divider {
+      width: 1px;
+      height: 3rem;
+      background: rgba(255,255,255,0.1);
+      margin: 2.5rem auto;
+    }
+    .aside-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.5;
+      max-width: 300px;
+    }
+
+    /* HOW IT WORKS */
+    .how {
+      padding: 6rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--gray-light);
+    }
+    .how h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin-bottom: 4rem;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .step-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      color: var(--gray-light);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .step-title {
+      font-weight: 500;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+    .step-desc { font-size: 0.85rem; color: var(--gray-text); line-height: 1.6; }
+
+    /* FINAL CTA */
+    .final-cta {
+      padding: 8rem 2rem;
+      text-align: center;
+      background: var(--black);
+    }
+    .final-cta h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: var(--white);
+      line-height: 0.95;
+      margin-bottom: 2.5rem;
+    }
+    .final-cta h2 .teal { color: var(--seafoam-hint); }
+    .final-cta-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 3rem;
+    }
+    .final-cta .buy-btn {
+      display: inline-block;
+      width: auto;
+      padding: 1.1rem 3rem;
+      background: var(--white);
+      color: var(--black);
+    }
+    .final-cta .buy-btn:hover { background: var(--seafoam-hint); color: var(--black); }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid #1a1a1a;
+      background: var(--black);
+    }
+    footer p {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.1em;
+    }
+    footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+    footer a:hover { color: var(--seafoam-hint); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .product { grid-template-columns: 1fr; }
+      .product-visual { padding: 3rem 1.5rem; min-height: 55vw; }
+      .product-info { padding: 2.5rem 1.5rem; border-left: none; border-top: 1px solid var(--gray-light); }
+      .story { grid-template-columns: 1fr; }
+      .story-text { padding: 3.5rem 1.5rem; }
+      .story-aside { padding: 3rem 1.5rem; }
+      .steps { grid-template-columns: 1fr; gap: 2rem; }
+      .hero { padding: 6rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="/" class="nav-logo">the <span>svet</span> shop</a>
+    <a href="#product" class="nav-buy">Get the shirt</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Est. eighth grade. Launched tonight.</p>
+    <h1 class="hero-headline">ONE<br>SHIRT.<br>YOUR<br>WORDS.</h1>
+    <p class="hero-sub">The softest white cotton you've ever worn. One mantra. That's the whole thing.</p>
+    <a href="#product" class="hero-cta">Choose your mantra</a>
+    <p class="hero-scroll">↓ scroll</p>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Looking Nowhere Going Somewhere</span><span class="dot">·</span>
+      <span>This Is It</span><span class="dot">·</span>
+      <span>A Little Bit Of A Lot</span><span class="dot">·</span>
+      <span>Humble As F*ck</span><span class="dot">·</span>
+      <span>Pretty OK</span><span class="dot">·</span>
+      <span>Looking Nowhere Going Somewhere</span><span class="dot">·</span>
+      <span>This Is It</span><span class="dot">·</span>
+      <span>A Little Bit Of A Lot</span><span class="dot">·</span>
+      <span>Humble As F*ck</span><span class="dot">·</span>
+      <span>Pretty OK</span><span class="dot">·</span>
+    </div>
+  </div>
+
+  <!-- PRODUCT -->
+  <section class="product" id="product">
+    <div class="product-visual">
+      <div class="shirt-mockup" id="shirtMockup">
+        <p class="shirt-label">Bella+Canvas 3001 · Unisex</p>
+        <p class="shirt-text" id="shirtText">Looking Nowhere<br>Going Somewhere</p>
+        <p class="shirt-byline">thesvetshop.com</p>
+      </div>
+    </div>
+    <div class="product-info">
+      <p class="product-tag">The Only Shirt We Sell</p>
+      <h2 class="product-name">The<br>Mantra<br>Tee</h2>
+      <p class="product-desc">Super soft 100% cotton. White. One color. One word, or a whole sentence. Worn by people who mean it.</p>
+
+      <p class="mantra-label">Choose your mantra</p>
+      <div class="mantra-grid" id="mantraGrid">
+        <button class="mantra-chip active" data-mantra="Looking Nowhere&#10;Going Somewhere">Looking Nowhere Going Somewhere</button>
+        <button class="mantra-chip" data-mantra="This Is It">This Is It</button>
+        <button class="mantra-chip" data-mantra="A Little Bit&#10;Of A Lot">A Little Bit Of A Lot</button>
+        <button class="mantra-chip" data-mantra="Humble As F*ck">Humble As F*ck</button>
+        <button class="mantra-chip" data-mantra="Pretty OK">Pretty OK</button>
+      </div>
+
+      <div class="price-row">
+        <span class="price">$38</span>
+        <span class="price-note">Free shipping in the US · Ships worldwide</span>
+      </div>
+
+      <a href="#" class="buy-btn" id="buyBtn">Get the shirt — $38</a>
+
+      <div class="product-details">
+        <div class="detail-row">Bella+Canvas 3001 — the softest unisex tee on the market</div>
+        <div class="detail-row">100% Airlume combed ring-spun cotton</div>
+        <div class="detail-row">White. One style. One shirt. That's the whole menu.</div>
+        <div class="detail-row">Print ships within 3 business days</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE BREAK -->
+  <div class="quote-break">
+    <p class="big-quote">"Words are the only <span class="teal">jewelry</span> that never leaves your body."</p>
+  </div>
+
+  <!-- STORY -->
+  <section class="story" id="story">
+    <div class="story-text">
+      <p class="story-eyebrow">The origin story</p>
+      <h2 class="story-headline">25 years.<br>One volcano.<br>One hour.</h2>
+      <div class="story-body">
+        <p>In eighth grade, the boys at school started making fun of my name. Svetlana. So they called me Svet shirt. Svet pants. Svet mobile. Everything with a Svet in front of it.</p>
+        <p>So I said: <em>oh, you just wait.</em></p>
+        <p>I said I was going to open the Svet Shop. A play on sweatshop. I was going to make the most beautiful things, and with all the money I'd make, I'd get rid of sweatshirts everywhere.</p>
+        <p>I talked about it for years. I always sort of worked toward it. Then it never happened. I didn't know what it would sell. Different ideas. Different years.</p>
+        <p>Then one night, sitting on a volcano in San Marcos, Guatemala, a little elevated, a lot inspired, it became obvious: I already had the mantras. I already had the words. I'd been making them for years — in my art, in my work, in everything I do.</p>
+        <p>All I needed was a super soft cotton t-shirt and somewhere to put them.</p>
+        <p>It only took me 25 years to build this in an hour. Life is funny.</p>
+      </div>
+    </div>
+    <div class="story-aside">
+      <div class="aside-number">25</div>
+      <div class="aside-label">Years in the making</div>
+      <div class="aside-divider"></div>
+      <p class="aside-quote">"oh, you just wait."</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how">
+    <h2>Ridiculously simple.</h2>
+    <div class="steps">
+      <div>
+        <div class="step-num">01</div>
+        <div class="step-title">Pick your mantra</div>
+        <div class="step-desc">One that's yours right now. The one you need to wear in the world today.</div>
+      </div>
+      <div>
+        <div class="step-num">02</div>
+        <div class="step-title">We make it</div>
+        <div class="step-desc">Printed on the best white tee that exists. Ships in 3 business days.</div>
+      </div>
+      <div>
+        <div class="step-num">03</div>
+        <div class="step-title">Wear it like you mean it</div>
+        <div class="step-desc">Because you do. Because these aren't just words — they're yours.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final-cta">
+    <h2>Get the<br><span class="teal">damn</span><br>shirt.</h2>
+    <p class="final-cta-sub">One shirt. Your words. $38.</p>
+    <a href="#product" class="buy-btn">Choose your mantra ↑</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 The Svet Shop &nbsp;·&nbsp; by <a href="https://svetlanasaitsky.com" target="_blank">Svetlana Saitsky</a> &nbsp;·&nbsp; Built on a volcano in San Marcos, Guatemala</p>
+  </footer>
+
+  <script>
+    const mantras = document.querySelectorAll('.mantra-chip');
+    const shirtText = document.getElementById('shirtText');
+
+    mantras.forEach(chip => {
+      chip.addEventListener('click', () => {
+        mantras.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        shirtText.innerHTML = chip.dataset.mantra.replace(/\n/g, '<br>');
+      });
+    });
+  </script>
+
+</body>
+</html>
