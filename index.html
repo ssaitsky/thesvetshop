@@ -844,7 +844,7 @@
       <div class="photo-stack">
         <img src="shirts/this-is-it.jpg" id="mainPhoto" class="photo-main" alt="The Mantra Tee" />
       </div>
-      <div class="photo-thumbs" style="display:none;"></div>
+      <div class="photo-thumbs" id="photoThumbs"></div>
     </div>
     <div class="product-info">
       <p class="mantra-label">Choose your color</p>
@@ -855,21 +855,14 @@
 
       <p class="mantra-label" style="margin-top:1.5rem;">Choose your mantra <span class="scroll-hint">↓ scroll</span></p>
       <div class="mantra-grid" id="mantraGrid">
-        <button class="mantra-chip active" data-mantra="This Is It" data-slug="this-is-it">This Is It</button>
-        <button class="mantra-chip" data-mantra="Looking Nowhere&#10;Going Somewhere" data-slug="looking-nowhere-going-somewhere">Looking Nowhere Going Somewhere</button>
-        <button class="mantra-chip" data-mantra="I Am A Little Bit&#10;Of A Lot" data-slug="a-little-bit-of-a-lot">I Am A Little Bit Of A Lot</button>
-        <button class="mantra-chip" data-mantra="Humble As Fuck" data-slug="humble-as-fuck">Humble As Fuck</button>
-        <button class="mantra-chip" data-mantra="Pretty OK" data-slug="pretty-ok">Pretty OK</button>
-        <button class="mantra-chip" data-mantra="You Can Have Your Cake&#10;Eat It Too&#10;and have a glass of milk." data-slug="cake-milk">You Can Have Your Cake Eat It Too And Have A Glass Of Milk</button>
-        <button class="mantra-chip" data-mantra="A No Is A Yes&#10;To Something Better" data-slug="a-no-is-a-yes">A No Is A Yes To Something Better</button>
-        <button class="mantra-chip" data-mantra="I Am Exactly&#10;Perfectly On Time" data-slug="exactly-on-time">I Am Exactly Perfectly On Time</button>
-        <button class="mantra-chip" data-mantra="Flexibility Is&#10;Opportunity" data-slug="flexibility-is-opportunity">Flexibility Is Opportunity</button>
-        <button class="mantra-chip" data-mantra="When Is Now" data-slug="when-is-now">When Is Now</button>
-        <button class="mantra-chip" data-mantra="I Stabilize At A&#10;Magical Frequency" data-slug="magical-frequency">I Stabilize At A Magical Frequency</button>
-        <button class="mantra-chip" data-mantra="Lose Your Shit.&#10;Find Yourself" data-slug="lose-your-shit">Lose Your Shit. Find Yourself</button>
-        <button class="mantra-chip" data-mantra="Direct Is Kind" data-slug="direct-is-kind">Direct Is Kind</button>
-        <button class="mantra-chip" data-mantra="A Rad Life Is Made Of&#10;Detours Not Shortcuts" data-slug="rad-life-detours">A Rad Life Is Made Of Detours Not Shortcuts</button>
-        <button class="mantra-chip" data-mantra="The More I Slow Down&#10;The More Time&#10;I Seem To Have" data-slug="slow-down">The More I Slow Down The More Time I Seem To Have</button>
+        <button class="mantra-chip active" data-slug="this-is-it">This Is It</button>
+        <button class="mantra-chip" data-slug="pretty-ok">Pretty OK</button>
+        <button class="mantra-chip" data-slug="when-is-now">When Is Now</button>
+        <button class="mantra-chip" data-slug="a-no-is-a-yes">A No Is A Yes To Something Better</button>
+        <button class="mantra-chip" data-slug="exactly-on-time">I Am Exactly Perfectly On Time</button>
+        <button class="mantra-chip" data-slug="flexibility-is-opportunity">Flexibility Is Opportunity</button>
+        <button class="mantra-chip" data-slug="magical-frequency">I Stabilize At A Magical Frequency</button>
+        <button class="mantra-chip" data-slug="slow-down">The More I Slow Down The More Time I Seem To Have</button>
       </div>
 
       <div class="price-row">
@@ -993,14 +986,48 @@
 
     const mainPhoto = document.getElementById('mainPhoto');
     const previewText = document.getElementById('previewText');
+    const thumbsWrap = document.getElementById('photoThumbs');
+
+    // Model order varies per mantra: first model shown = default photo
+    const modelOrders = {
+      'this-is-it':               ['man','woman','couple','shirt'],
+      'pretty-ok':                ['woman','man','couple','shirt'],
+      'when-is-now':              ['couple','man','woman','shirt'],
+      'a-no-is-a-yes':            ['woman','couple','man','shirt'],
+      'exactly-on-time':          ['man','couple','woman','shirt'],
+      'flexibility-is-opportunity':['woman','man','couple','shirt'],
+      'magical-frequency':        ['couple','woman','man','shirt'],
+      'slow-down':                ['man','woman','couple','shirt'],
+    };
+
+    const modelLabels = { man:'Man', woman:'Woman', couple:'Couple', shirt:'Shirt' };
+
     let currentSlug = 'this-is-it';
-    let currentModel = 'man';
+    let currentModel = modelOrders['this-is-it'][0];
+
+    function buildThumbs(slug) {
+      const order = modelOrders[slug] || ['man','woman','couple','shirt'];
+      thumbsWrap.innerHTML = '';
+      order.forEach((model, i) => {
+        const img = document.createElement('img');
+        img.src = `shirts/${slug}-${model}.jpg`;
+        img.className = 'thumb' + (i === 0 ? ' active' : '');
+        img.dataset.model = model;
+        img.title = modelLabels[model];
+        img.addEventListener('click', () => {
+          document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+          img.classList.add('active');
+          currentModel = model;
+          updatePhoto();
+        });
+        thumbsWrap.appendChild(img);
+      });
+    }
 
     function updatePhoto() {
-      const suffix = currentModel === 'woman' ? '-woman' : '';
       mainPhoto.style.opacity = '0';
       setTimeout(() => {
-        mainPhoto.src = `shirts/${currentSlug}${suffix}.jpg`;
+        mainPhoto.src = `shirts/${currentSlug}-${currentModel}.jpg`;
         mainPhoto.style.opacity = '1';
       }, 150);
     }
@@ -1010,16 +1037,8 @@
         document.querySelectorAll('.mantra-chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         currentSlug = chip.dataset.slug;
-        previewText.innerHTML = chip.dataset.mantra.replace(/\n/g, '<br>');
-        updatePhoto();
-      });
-    });
-
-    document.querySelectorAll('.thumb').forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
-        currentModel = thumb.dataset.model;
+        currentModel = (modelOrders[currentSlug] || ['man'])[0];
+        buildThumbs(currentSlug);
         updatePhoto();
       });
     });
@@ -1032,54 +1051,8 @@
       });
     });
 
-    // Color swatches
-    const swatches = document.querySelectorAll('.color-swatch');
-    const colorName = document.getElementById('colorName');
-    const thumbsWrap = document.getElementById('photoThumbs');
-
-    const colorPhotos = {
-      blue: ['photo-blue-couple','photo-blue-woman','photo-blue-man'],
-      black: ['photo-black-couple']
-    };
-    const colorSrcs = {
-      blue: ['mockup-couple-blue.jpg','mockup-woman-blue.jpg','mockup-man-blue.jpg'],
-      black: ['mockup-couple-black.jpg']
-    };
-    const colorLabels = { blue: 'Ice Blue', black: 'Black' };
-
-    swatches.forEach(swatch => {
-      swatch.addEventListener('click', () => {
-        swatches.forEach(s => s.classList.remove('active'));
-        swatch.classList.add('active');
-        const color = swatch.dataset.color;
-        colorName.textContent = colorLabels[color];
-        const preview = document.getElementById('mantraPreview');
-        const overlay = document.getElementById('overlayText');
-        if (color === 'black') {
-          preview.classList.add('dark');
-          overlay.classList.add('on-black');
-        } else {
-          preview.classList.remove('dark');
-          overlay.classList.remove('on-black');
-        }
-
-        // Rebuild thumbs
-        thumbsWrap.innerHTML = '';
-        colorPhotos[color].forEach((id, i) => {
-          const btn = document.createElement('button');
-          btn.className = 'thumb' + (i === 0 ? ' active' : '');
-          btn.dataset.photo = id;
-          btn.innerHTML = `<img src="${colorSrcs[color][i]}" alt="" />`;
-          btn.addEventListener('click', () => {
-            thumbsWrap.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-            btn.classList.add('active');
-            showPhoto(id);
-          });
-          thumbsWrap.appendChild(btn);
-        });
-        showPhoto(colorPhotos[color][0]);
-      });
-    });
+    // Init
+    buildThumbs(currentSlug);
     // Submit mantra form
     document.getElementById('mantraForm').addEventListener('submit', async function(e) {
       e.preventDefault();
