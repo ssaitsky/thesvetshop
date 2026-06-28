@@ -785,6 +785,100 @@
       letter-spacing: 0.1em;
     }
     footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+
+    /* SIZE MODAL */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white);
+      width: 100%;
+      max-width: 540px;
+      border-radius: 12px 12px 0 0;
+      padding: 2rem 1.5rem 2.5rem;
+    }
+    @media (min-width: 600px) {
+      .modal-overlay { align-items: center; }
+      .modal { border-radius: 8px; }
+    }
+    .modal-close {
+      float: right;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--gray-text);
+      line-height: 1;
+      margin-top: -0.25rem;
+    }
+    .modal-eyebrow {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal-hint);
+      margin-bottom: 0.4rem;
+    }
+    .modal-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .modal-sub {
+      font-size: 0.75rem;
+      color: var(--gray-text);
+      margin-bottom: 1.5rem;
+    }
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .size-btn {
+      padding: 0.65rem 0.5rem;
+      border: 1.5px solid var(--gray-light);
+      border-radius: 4px;
+      background: none;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .size-btn:hover { border-color: var(--black); }
+    .size-btn.selected { background: var(--black); color: var(--white); border-color: var(--black); }
+    .size-note {
+      font-size: 0.7rem;
+      color: var(--gray-text);
+      margin-bottom: 1.5rem;
+    }
+    .checkout-btn {
+      display: block;
+      width: 100%;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 1rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .checkout-btn:hover { background: var(--teal-hint); }
+    .checkout-btn:disabled { opacity: 0.4; cursor: not-allowed; }
     footer a:hover { color: var(--seafoam-hint); }
 
     /* RESPONSIVE */
@@ -918,6 +1012,27 @@
       </div>
     </div>
   </section>
+
+  <!-- SIZE MODAL -->
+  <div class="modal-overlay" id="sizeModal">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">×</button>
+      <p class="modal-eyebrow">Almost there</p>
+      <h2 class="modal-title" id="modalMantra">This Is It</h2>
+      <p class="modal-sub" id="modalSub">Ice Blue · Choose your size</p>
+      <div class="size-grid">
+        <button class="size-btn" data-size="XS">XS</button>
+        <button class="size-btn" data-size="S">S</button>
+        <button class="size-btn" data-size="M">M</button>
+        <button class="size-btn" data-size="L">L</button>
+        <button class="size-btn" data-size="XL">XL</button>
+        <button class="size-btn" data-size="2XL">2XL</button>
+        <button class="size-btn" data-size="3XL">3XL</button>
+      </div>
+      <p class="size-note">Unisex relaxed fit. Size down for a fitted look.</p>
+      <button class="checkout-btn" id="checkoutBtn" disabled>Select a size to continue</button>
+    </div>
+  </div>
 
   <!-- QUOTE BREAK -->
   <div class="quote-break">
@@ -1099,6 +1214,60 @@
 
     // Init
     buildThumbs(currentSlug);
+
+    // Size modal
+    const modal = document.getElementById('sizeModal');
+    const modalMantra = document.getElementById('modalMantra');
+    const modalSub = document.getElementById('modalSub');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    let selectedSize = null;
+
+    document.getElementById('buyBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      const chip = document.querySelector('.mantra-chip.active');
+      const colorLabel = currentColor === 'black' ? 'Black Heather' : 'Ice Blue';
+      modalMantra.textContent = chip ? chip.textContent : 'Your Mantra';
+      modalSub.textContent = `${colorLabel} · Choose your size`;
+      selectedSize = null;
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+      checkoutBtn.disabled = true;
+      checkoutBtn.textContent = 'Select a size to continue';
+      modal.classList.add('open');
+    });
+
+    document.getElementById('modalClose').addEventListener('click', () => modal.classList.remove('open'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
+
+    document.querySelectorAll('.size-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        selectedSize = btn.dataset.size;
+        checkoutBtn.disabled = false;
+        checkoutBtn.textContent = `Get the shirt — $38`;
+      });
+    });
+
+    checkoutBtn.addEventListener('click', async () => {
+      if (!selectedSize) return;
+      const chip = document.querySelector('.mantra-chip.active');
+      const mantra = chip ? chip.textContent : '';
+      checkoutBtn.disabled = true;
+      checkoutBtn.textContent = 'Redirecting to checkout…';
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ mantra, color: currentColor, size: selectedSize }),
+        });
+        const data = await res.json();
+        if (data.url) window.location.href = data.url;
+        else throw new Error(data.error || 'Something went wrong');
+      } catch (err) {
+        checkoutBtn.disabled = false;
+        checkoutBtn.textContent = 'Something went wrong — try again';
+      }
+    });
     // Submit mantra form
     document.getElementById('mantraForm').addEventListener('submit', async function(e) {
       e.preventDefault();

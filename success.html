@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're in — The Svet Shop</title>
+  <link rel="icon" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0d0d0d;
+      --teal: #4a9fa5;
+      --gray-text: #888;
+      --gray-light: #f0f0f0;
+      --white: #fff;
+    }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--white);
+      color: var(--black);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+    .check {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 2rem;
+    }
+    .check svg { width: 32px; height: 32px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    h1 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+    .sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 3vw, 1.6rem);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gray-text);
+      margin-bottom: 0.5rem;
+    }
+    .order-detail {
+      font-size: 0.8rem;
+      color: var(--gray-text);
+      letter-spacing: 0.05em;
+      margin-bottom: 2.5rem;
+    }
+    .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gray-light);
+      margin: 2rem auto;
+    }
+    .note {
+      font-size: 0.8rem;
+      color: var(--gray-text);
+      max-width: 400px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+    .home-link {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 0.1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="check">
+    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  </div>
+  <h1>You're in.</h1>
+  <p class="sub" id="mantraLine">Your shirt is on its way.</p>
+  <p class="order-detail" id="orderDetail"></p>
+  <div class="divider"></div>
+  <p class="note">Check your email for a confirmation. Your shirt ships within 3 business days. US delivery takes 3–5 days after that.<br><br>Questions? <a href="mailto:hello@svetlanasaitsky.com" style="color:inherit;">hello@svetlanasaitsky.com</a></p>
+  <a href="/" class="home-link">Back to the shop</a>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const mantra = params.get('mantra');
+    const size = params.get('size');
+    const color = params.get('color');
+    if (mantra) document.getElementById('mantraLine').textContent = `"${mantra}" is on its way.`;
+    if (size || color) {
+      const colorLabel = color === 'black' ? 'Black Heather' : 'Ice Blue';
+      document.getElementById('orderDetail').textContent = [colorLabel, size ? `Size ${size}` : ''].filter(Boolean).join(' · ').toUpperCase();
+    }
+  </script>
+</body>
+</html>
