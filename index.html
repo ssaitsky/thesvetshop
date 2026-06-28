@@ -181,50 +181,49 @@
     .product-visual {
       background: var(--gray-light);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .shirt-mockup {
-      width: 100%;
-      max-width: 360px;
-      aspect-ratio: 3/4;
-      background: var(--white);
-      border-radius: 4px;
-      display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
-      padding: 3rem 2rem;
-      transition: all 0.4s ease;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      gap: 1rem;
     }
-    .shirt-label {
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gray-mid);
-      margin-bottom: 2rem;
+    .photo-stack {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 1;
     }
-    .shirt-text {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1.4rem, 4vw, 2.2rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      text-align: center;
-      color: var(--black);
-      transition: all 0.3s ease;
+    .photo-main {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      border-radius: 2px;
     }
-    .shirt-byline {
-      margin-top: 2rem;
-      font-size: 0.6rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gray-mid);
+    .photo-main.active { opacity: 1; }
+    .photo-thumbs {
+      display: flex;
+      gap: 0.5rem;
     }
+    .thumb {
+      width: 56px;
+      height: 56px;
+      border: 2px solid transparent;
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+      padding: 0;
+      background: none;
+      transition: border-color 0.15s;
+    }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .thumb.active { border-color: var(--black); }
+    .thumb:hover { border-color: var(--gray-mid); }
 
     .product-info {
       display: flex;
@@ -260,6 +259,29 @@
     }
 
     /* MANTRA SELECTOR */
+    .color-row {
+      display: flex;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .color-swatch {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: transform 0.15s, border-color 0.15s;
+      outline-offset: 3px;
+    }
+    .color-swatch:hover { transform: scale(1.1); }
+    .color-swatch.active { border-color: var(--black); outline: 2px solid var(--black); }
+    .color-name {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-text);
+      margin-bottom: 1.5rem;
+    }
     .mantra-label {
       font-size: 0.65rem;
       letter-spacing: 0.2em;
@@ -571,10 +593,16 @@
   <!-- PRODUCT -->
   <section class="product" id="product">
     <div class="product-visual">
-      <div class="shirt-mockup" id="shirtMockup">
-        <p class="shirt-label">Bella+Canvas 3001 · Unisex</p>
-        <p class="shirt-text" id="shirtText">Looking Nowhere<br>Going Somewhere</p>
-        <p class="shirt-byline">thesvetshop.com</p>
+      <div class="photo-stack">
+        <img src="mockup-couple-blue.jpg" class="photo-main active" id="photo-blue-couple" alt="Two people wearing the ice blue tee" />
+        <img src="mockup-woman-blue.jpg" class="photo-main" id="photo-blue-woman" alt="Woman wearing the ice blue tee" />
+        <img src="mockup-man-blue.jpg" class="photo-main" id="photo-blue-man" alt="Man wearing the ice blue tee" />
+        <img src="mockup-couple-black.jpg" class="photo-main" id="photo-black-couple" alt="Two people wearing the black tee" />
+      </div>
+      <div class="photo-thumbs" id="photoThumbs">
+        <button class="thumb active" data-photo="photo-blue-couple"><img src="mockup-couple-blue.jpg" alt="" /></button>
+        <button class="thumb" data-photo="photo-blue-woman"><img src="mockup-woman-blue.jpg" alt="" /></button>
+        <button class="thumb" data-photo="photo-blue-man"><img src="mockup-man-blue.jpg" alt="" /></button>
       </div>
     </div>
     <div class="product-info">
@@ -582,7 +610,14 @@
       <h2 class="product-name">The<br>Mantra<br>Tee</h2>
       <p class="product-desc">Super soft 100% cotton. White. One color. One word, or a whole sentence. Worn by people who mean it.</p>
 
-      <p class="mantra-label">Choose your mantra</p>
+      <p class="mantra-label">Choose your color</p>
+      <div class="color-row" id="colorRow">
+        <button class="color-swatch active" data-color="blue" style="background:#b8d8e3;" title="Ice Blue" aria-label="Ice Blue"></button>
+        <button class="color-swatch" data-color="black" style="background:#2a2a2a;" title="Black" aria-label="Black"></button>
+      </div>
+      <p class="color-name" id="colorName">Ice Blue</p>
+
+      <p class="mantra-label" style="margin-top:1.5rem;">Choose your mantra</p>
       <div class="mantra-grid" id="mantraGrid">
         <button class="mantra-chip active" data-mantra="Looking Nowhere&#10;Going Somewhere">Looking Nowhere Going Somewhere</button>
         <button class="mantra-chip" data-mantra="This Is It">This Is It</button>
@@ -680,14 +715,67 @@
   </footer>
 
   <script>
+    // Mantra chips
     const mantras = document.querySelectorAll('.mantra-chip');
-    const shirtText = document.getElementById('shirtText');
-
     mantras.forEach(chip => {
       chip.addEventListener('click', () => {
         mantras.forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
-        shirtText.innerHTML = chip.dataset.mantra.replace(/\n/g, '<br>');
+      });
+    });
+
+    // Photo thumbnails
+    const thumbs = document.querySelectorAll('.thumb');
+    const photos = document.querySelectorAll('.photo-main');
+    function showPhoto(id) {
+      photos.forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+    thumbs.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        thumbs.forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+        showPhoto(thumb.dataset.photo);
+      });
+    });
+
+    // Color swatches
+    const swatches = document.querySelectorAll('.color-swatch');
+    const colorName = document.getElementById('colorName');
+    const thumbsWrap = document.getElementById('photoThumbs');
+
+    const colorPhotos = {
+      blue: ['photo-blue-couple','photo-blue-woman','photo-blue-man'],
+      black: ['photo-black-couple']
+    };
+    const colorSrcs = {
+      blue: ['mockup-couple-blue.jpg','mockup-woman-blue.jpg','mockup-man-blue.jpg'],
+      black: ['mockup-couple-black.jpg']
+    };
+    const colorLabels = { blue: 'Ice Blue', black: 'Black' };
+
+    swatches.forEach(swatch => {
+      swatch.addEventListener('click', () => {
+        swatches.forEach(s => s.classList.remove('active'));
+        swatch.classList.add('active');
+        const color = swatch.dataset.color;
+        colorName.textContent = colorLabels[color];
+
+        // Rebuild thumbs
+        thumbsWrap.innerHTML = '';
+        colorPhotos[color].forEach((id, i) => {
+          const btn = document.createElement('button');
+          btn.className = 'thumb' + (i === 0 ? ' active' : '');
+          btn.dataset.photo = id;
+          btn.innerHTML = `<img src="${colorSrcs[color][i]}" alt="" />`;
+          btn.addEventListener('click', () => {
+            thumbsWrap.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            showPhoto(id);
+          });
+          thumbsWrap.appendChild(btn);
+        });
+        showPhoto(colorPhotos[color][0]);
       });
     });
   </script>
