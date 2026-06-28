@@ -793,7 +793,8 @@
       .nav-buy { font-size: 0.6rem !important; padding: 0.4rem 0.8rem; }
 
       .product { grid-template-columns: 1fr; min-height: 0; }
-      .photo-stack { min-height: 0; height: 70vw; max-height: 420px; flex: none; }
+      .photo-stack { min-height: 0; height: auto; max-height: none; flex: none; }
+      .photo-main { height: auto; object-fit: contain; object-position: center; }
       .photo-thumbs { padding: 0.5rem 0.75rem; }
       .thumb { width: 48px; height: 48px; }
 
@@ -910,7 +911,7 @@
         <div class="detail-row">Unisex relaxed fit. If you prefer a fitted look, size down one.</div>
         <div class="detail-row">Machine wash cold, tumble dry low. No bleach. No iron on print.</div>
         <div class="detail-row">Ships within 3 business days. US delivery 3–5 days after that. International varies.</div>
-        <div class="detail-row" style="font-weight:600; color: var(--black);">Each shirt is made to order. All sales final. If something arrives wrong or damaged, email <a href="mailto:hello@svetlanasaitsky.com" style="color:inherit;">hello@svetlanasaitsky.com</a> and we'll make it right.</div>
+        <div class="detail-row" style="font-weight:600; color: var(--black);">Each shirt is made to order. All sales final. If something arrives wrong or damaged, email us at <a href="mailto:hello@svetlanasaitsky.com" style="color:inherit; word-break:break-all;">hello@svetlanasaitsky.com</a> and we'll make it right.</div>
 
         <details class="size-guide">
           <summary>Size guide</summary>
@@ -1103,6 +1104,7 @@
         swatch.classList.add('active');
         currentColor = swatch.dataset.color;
         document.getElementById('colorName').textContent = currentColor === 'black' ? 'Black Heather' : 'Ice Blue';
+        buildThumbs(currentSlug);
         updatePhoto();
       });
     });
