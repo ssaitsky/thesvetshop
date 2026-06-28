@@ -12,6 +12,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
   <style>
+    @font-face {
+      font-family: 'EdoSZ';
+      src: url('edosz.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
+  <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -259,6 +267,37 @@
     }
 
     /* MANTRA SELECTOR */
+    .mantra-preview {
+      background: var(--gray-light);
+      border-radius: 2px;
+      padding: 1.5rem 2rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .preview-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray-text);
+      margin-bottom: 1rem;
+    }
+    .preview-text {
+      font-family: 'EdoSZ', sans-serif;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      line-height: 1.2;
+      color: var(--black);
+      text-transform: uppercase;
+    }
+    .color-swatch.active[data-color="black"] ~ .preview-text,
+    .preview-text.on-black {
+      color: var(--white);
+    }
+    .mantra-preview.dark {
+      background: #2a2a2a;
+    }
+    .mantra-preview.dark .preview-text { color: var(--white); }
+    .mantra-preview.dark .preview-label { color: rgba(255,255,255,0.4); }
+
     .color-row {
       display: flex;
       gap: 0.75rem;
@@ -641,6 +680,11 @@
         <span class="price-note">Free shipping in the US · Ships worldwide</span>
       </div>
 
+      <div class="mantra-preview" id="mantraPreview">
+        <p class="preview-label">Your print preview</p>
+        <p class="preview-text" id="previewText">LOOKING NOWHERE<br>GOING SOMEWHERE</p>
+      </div>
+
       <a href="#" class="buy-btn" id="buyBtn">Get the shirt — $38</a>
 
       <div class="product-details">
@@ -717,10 +761,12 @@
   <script>
     // Mantra chips
     const mantras = document.querySelectorAll('.mantra-chip');
+    const previewText = document.getElementById('previewText');
     mantras.forEach(chip => {
       chip.addEventListener('click', () => {
         mantras.forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
+        previewText.innerHTML = chip.dataset.mantra.replace(/\n/g, '<br>');
       });
     });
 
@@ -760,6 +806,8 @@
         swatch.classList.add('active');
         const color = swatch.dataset.color;
         colorName.textContent = colorLabels[color];
+        const preview = document.getElementById('mantraPreview');
+        if (color === 'black') { preview.classList.add('dark'); } else { preview.classList.remove('dark'); }
 
         // Rebuild thumbs
         thumbsWrap.innerHTML = '';
