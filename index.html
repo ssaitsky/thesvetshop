@@ -300,9 +300,10 @@
     .mantra-preview {
       background: var(--gray-light);
       border-radius: 2px;
-      padding: 1.5rem 2rem;
+      padding: 2rem 2rem;
       text-align: center;
       margin-bottom: 2rem;
+      border: 1.5px solid var(--gray-mid);
     }
     .preview-label {
       font-size: 0.6rem;
@@ -313,7 +314,7 @@
     }
     .preview-text {
       font-family: 'EdoSZ', sans-serif;
-      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
       line-height: 1.2;
       color: var(--black);
       text-transform: uppercase;
@@ -803,9 +804,6 @@
     <div class="product-visual">
       <div class="photo-stack">
         <img src="mockup-couple-blue.jpg" class="photo-main" id="mainPhoto" alt="The Mantra Tee" />
-        <div class="photo-overlay">
-          <p class="overlay-text" id="overlayText">THIS IS IT</p>
-        </div>
       </div>
       <div class="photo-thumbs" id="photoThumbs">
         <button class="thumb active" data-src="mockup-couple-blue.jpg"><img src="mockup-couple-blue.jpg" alt="Couple in ice blue" /></button>
@@ -851,7 +849,7 @@
 
       <div class="mantra-preview" id="mantraPreview">
         <p class="preview-label">Your print preview</p>
-        <p class="preview-text" id="previewText">LOOKING NOWHERE<br>GOING SOMEWHERE</p>
+        <p class="preview-text" id="previewText">THIS IS IT</p>
       </div>
 
       <a href="#" class="buy-btn" id="buyBtn">Get the shirt — $38</a>
