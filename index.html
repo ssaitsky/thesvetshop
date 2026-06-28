@@ -834,35 +834,21 @@
   <!-- MARQUEE -->
   <div class="marquee-wrap" aria-hidden="true">
     <div class="marquee-track">
-      <span>Looking Nowhere Going Somewhere</span><span class="dot">·</span>
       <span>This Is It</span><span class="dot">·</span>
-      <span>A Little Bit Of A Lot</span><span class="dot">·</span>
-      <span>Humble As Fuck</span><span class="dot">·</span>
       <span>Pretty OK</span><span class="dot">·</span>
-      <span>You Can Have Your Cake Eat It Too And Have A Glass Of Milk</span><span class="dot">·</span>
+      <span>When Is Now</span><span class="dot">·</span>
       <span>A No Is A Yes To Something Better</span><span class="dot">·</span>
       <span>I Am Exactly Perfectly On Time</span><span class="dot">·</span>
       <span>Flexibility Is Opportunity</span><span class="dot">·</span>
-      <span>When Is Now</span><span class="dot">·</span>
       <span>I Stabilize At A Magical Frequency</span><span class="dot">·</span>
-      <span>Lose Your Shit Find Yourself</span><span class="dot">·</span>
-      <span>Direct Is Kind</span><span class="dot">·</span>
-      <span>A Rad Life Is Made Of Detours Not Shortcuts</span><span class="dot">·</span>
       <span>The More I Slow Down The More Time I Seem To Have</span><span class="dot">·</span>
-      <span>Looking Nowhere Going Somewhere</span><span class="dot">·</span>
       <span>This Is It</span><span class="dot">·</span>
-      <span>A Little Bit Of A Lot</span><span class="dot">·</span>
-      <span>Humble As Fuck</span><span class="dot">·</span>
       <span>Pretty OK</span><span class="dot">·</span>
-      <span>You Can Have Your Cake Eat It Too And Have A Glass Of Milk</span><span class="dot">·</span>
+      <span>When Is Now</span><span class="dot">·</span>
       <span>A No Is A Yes To Something Better</span><span class="dot">·</span>
       <span>I Am Exactly Perfectly On Time</span><span class="dot">·</span>
       <span>Flexibility Is Opportunity</span><span class="dot">·</span>
-      <span>When Is Now</span><span class="dot">·</span>
       <span>I Stabilize At A Magical Frequency</span><span class="dot">·</span>
-      <span>Lose Your Shit Find Yourself</span><span class="dot">·</span>
-      <span>Direct Is Kind</span><span class="dot">·</span>
-      <span>A Rad Life Is Made Of Detours Not Shortcuts</span><span class="dot">·</span>
       <span>The More I Slow Down The More Time I Seem To Have</span><span class="dot">·</span>
     </div>
   </div>
@@ -1094,6 +1080,7 @@
         chip.classList.add('active');
         currentSlug = chip.dataset.slug;
         currentModel = (modelOrders[currentSlug] || ['man'])[0];
+        previewText.textContent = chip.textContent.toUpperCase();
         buildThumbs(currentSlug);
         updatePhoto();
       });
