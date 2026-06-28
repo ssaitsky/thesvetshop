@@ -850,6 +850,7 @@
       <p class="mantra-label">Choose your color</p>
       <div class="color-row" id="colorRow">
         <button class="color-swatch active" data-color="blue" style="background:#b8d8e3;" title="Ice Blue" aria-label="Ice Blue"></button>
+        <button class="color-swatch" data-color="black" style="background:#2a2a2a;" title="Black Heather" aria-label="Black Heather"></button>
       </div>
       <p class="color-name" id="colorName">Ice Blue</p>
 
@@ -1024,12 +1025,18 @@
       });
     }
 
+    let currentColor = 'blue';
+
     function updatePhoto() {
-      mainPhoto.style.opacity = '0';
-      setTimeout(() => {
-        mainPhoto.src = `shirts/${currentSlug}-${currentModel}.jpg`;
+      const darkSuffix = currentColor === 'black' ? '-dark' : '';
+      const next = `shirts/${currentSlug}-${currentModel}${darkSuffix}.jpg`;
+      const img = new Image();
+      img.onload = () => {
+        mainPhoto.src = next;
         mainPhoto.style.opacity = '1';
-      }, 150);
+      };
+      mainPhoto.style.opacity = '0';
+      img.src = next;
     }
 
     document.querySelectorAll('.mantra-chip').forEach(chip => {
@@ -1047,7 +1054,9 @@
       swatch.addEventListener('click', () => {
         document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
         swatch.classList.add('active');
-        document.getElementById('colorName').textContent = swatch.dataset.color === 'black' ? 'Black Heather' : 'Ice Blue';
+        currentColor = swatch.dataset.color;
+        document.getElementById('colorName').textContent = currentColor === 'black' ? 'Black Heather' : 'Ice Blue';
+        updatePhoto();
       });
     });
 
