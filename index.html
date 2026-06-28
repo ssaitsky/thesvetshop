@@ -142,12 +142,12 @@
     .hero-cta:hover { background: var(--teal-hint); transform: translateY(-1px); }
     .hero-einstein {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
+      font-size: 1.4rem;
       font-style: italic;
       color: var(--gray-text);
       margin-top: 1.5rem;
     }
-    .hero-einstein span { font-style: normal; font-size: 0.8rem; letter-spacing: 0.05em; }
+    .hero-einstein span { font-style: normal; font-size: 1rem; letter-spacing: 0.05em; }
     .hero-scroll {
       margin-top: 5rem;
       font-size: 0.7rem;
@@ -366,9 +366,12 @@
     }
     .mantra-grid {
       display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      flex-direction: column;
+      gap: 0.4rem;
       margin-bottom: 2.5rem;
+      max-height: 320px;
+      overflow-y: auto;
+      padding-right: 4px;
     }
     .mantra-chip {
       border: 1.5px solid var(--gray-mid);
@@ -382,9 +385,8 @@
       border-radius: 2px;
       transition: all 0.15s;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 220px;
+      text-align: left;
+      width: 100%;
     }
     .mantra-chip:hover {
       border-color: var(--black);
@@ -794,15 +796,12 @@
   <section class="product" id="product">
     <div class="product-visual">
       <div class="photo-stack">
-        <img src="mockup-couple-blue.jpg" class="photo-main active" id="photo-blue-couple" alt="Two people wearing the ice blue tee" />
-        <img src="mockup-woman-blue.jpg" class="photo-main" id="photo-blue-woman" alt="Woman wearing the ice blue tee" />
-        <img src="mockup-man-blue.jpg" class="photo-main" id="photo-blue-man" alt="Man wearing the ice blue tee" />
-        <img src="mockup-couple-black.jpg" class="photo-main" id="photo-black-couple" alt="Two people wearing the black tee" />
+        <img src="shirts/this-is-it.jpg" class="photo-main active" id="mainPhoto" alt="The Mantra Tee" />
       </div>
       <div class="photo-thumbs" id="photoThumbs">
-        <button class="thumb active" data-photo="photo-blue-couple"><img src="mockup-couple-blue.jpg" alt="" /></button>
-        <button class="thumb" data-photo="photo-blue-woman"><img src="mockup-woman-blue.jpg" alt="" /></button>
-        <button class="thumb" data-photo="photo-blue-man"><img src="mockup-man-blue.jpg" alt="" /></button>
+        <button class="thumb active" data-src="mockup-couple-blue.jpg"><img src="mockup-couple-blue.jpg" alt="Couple in ice blue" /></button>
+        <button class="thumb" data-src="mockup-woman-blue.jpg"><img src="mockup-woman-blue.jpg" alt="Woman in ice blue" /></button>
+        <button class="thumb" data-src="mockup-man-blue.jpg"><img src="mockup-man-blue.jpg" alt="Man in ice blue" /></button>
       </div>
     </div>
     <div class="product-info">
@@ -819,21 +818,21 @@
 
       <p class="mantra-label" style="margin-top:1.5rem;">Choose your mantra</p>
       <div class="mantra-grid" id="mantraGrid">
-        <button class="mantra-chip active" data-mantra="Looking Nowhere&#10;Going Somewhere">Looking Nowhere Going Somewhere</button>
-        <button class="mantra-chip" data-mantra="This Is It">This Is It</button>
-        <button class="mantra-chip" data-mantra="A Little Bit&#10;Of A Lot">A Little Bit Of A Lot</button>
-        <button class="mantra-chip" data-mantra="Humble As Fuck">Humble As Fuck</button>
-        <button class="mantra-chip" data-mantra="Pretty OK">Pretty OK</button>
-        <button class="mantra-chip" data-mantra="You Can Have Your Cake&#10;Eat It Too&#10;and have a glass of milk.">You Can Have Your Cake Eat It Too And Have A Glass Of Milk</button>
-        <button class="mantra-chip" data-mantra="A No Is A Yes&#10;To Something Better">A No Is A Yes To Something Better</button>
-        <button class="mantra-chip" data-mantra="I Am Exactly&#10;Perfectly On Time">I Am Exactly Perfectly On Time</button>
-        <button class="mantra-chip" data-mantra="Flexibility Is&#10;Opportunity">Flexibility Is Opportunity</button>
-        <button class="mantra-chip" data-mantra="When Is Now">When Is Now</button>
-        <button class="mantra-chip" data-mantra="I Stabilize At A&#10;Magical Frequency">I Stabilize At A Magical Frequency</button>
-        <button class="mantra-chip" data-mantra="Lose Your Shit&#10;Find Yourself">Lose Your Shit Find Yourself</button>
-        <button class="mantra-chip" data-mantra="Direct Is Kind">Direct Is Kind</button>
-        <button class="mantra-chip" data-mantra="A Rad Life Is Made Of&#10;Detours Not Shortcuts">A Rad Life Is Made Of Detours Not Shortcuts</button>
-        <button class="mantra-chip" data-mantra="The More I Slow Down&#10;The More Time&#10;I Seem To Have">The More I Slow Down The More Time I Seem To Have</button>
+        <button class="mantra-chip active" data-mantra="Looking Nowhere&#10;Going Somewhere" data-slug="looking-nowhere-going-somewhere">Looking Nowhere Going Somewhere</button>
+        <button class="mantra-chip" data-mantra="This Is It" data-slug="this-is-it">This Is It</button>
+        <button class="mantra-chip" data-mantra="A Little Bit&#10;Of A Lot" data-slug="a-little-bit-of-a-lot">A Little Bit Of A Lot</button>
+        <button class="mantra-chip" data-mantra="Humble As Fuck" data-slug="humble-as-fuck">Humble As Fuck</button>
+        <button class="mantra-chip" data-mantra="Pretty OK" data-slug="pretty-ok">Pretty OK</button>
+        <button class="mantra-chip" data-mantra="You Can Have Your Cake&#10;Eat It Too&#10;and have a glass of milk." data-slug="cake-milk">You Can Have Your Cake Eat It Too And Have A Glass Of Milk</button>
+        <button class="mantra-chip" data-mantra="A No Is A Yes&#10;To Something Better" data-slug="a-no-is-a-yes">A No Is A Yes To Something Better</button>
+        <button class="mantra-chip" data-mantra="I Am Exactly&#10;Perfectly On Time" data-slug="exactly-on-time">I Am Exactly Perfectly On Time</button>
+        <button class="mantra-chip" data-mantra="Flexibility Is&#10;Opportunity" data-slug="flexibility-is-opportunity">Flexibility Is Opportunity</button>
+        <button class="mantra-chip" data-mantra="When Is Now" data-slug="when-is-now">When Is Now</button>
+        <button class="mantra-chip" data-mantra="I Stabilize At A&#10;Magical Frequency" data-slug="magical-frequency">I Stabilize At A Magical Frequency</button>
+        <button class="mantra-chip" data-mantra="Lose Your Shit&#10;Find Yourself" data-slug="lose-your-shit">Lose Your Shit Find Yourself</button>
+        <button class="mantra-chip" data-mantra="Direct Is Kind" data-slug="direct-is-kind">Direct Is Kind</button>
+        <button class="mantra-chip" data-mantra="A Rad Life Is Made Of&#10;Detours Not Shortcuts" data-slug="rad-life-detours">A Rad Life Is Made Of Detours Not Shortcuts</button>
+        <button class="mantra-chip" data-mantra="The More I Slow Down&#10;The More Time&#10;I Seem To Have" data-slug="slow-down">The More I Slow Down The More Time I Seem To Have</button>
       </div>
 
       <div class="price-row">
@@ -878,7 +877,7 @@
         <p>It only took me 25 years to build this in an hour. Life is funny.</p>
       </div>
       <div class="svet-bio">
-        <p>Svetlana Saitsky is a life and executive coach, facilitator, and the person behind the words. She's been collecting mantras her whole life — in her art, her coaching, her conversations, and her notes app at 2am. This shop is the inevitable result.</p>
+        <p>Svetlana Saitsky is a life and executive coach, facilitator, and artist. She collects mantras the way most people collect receipts: compulsively, everywhere, in the journal that is basically always on her. The idea for this shop arrived in 8th grade and got built almost three decades later in an hour on a volcano in Guatemala. But that's another story.</p>
         <a href="https://svetlanasaitsky.com" target="_blank" class="bio-link">More about Svetlana →</a>
       </div>
     </div>
@@ -940,32 +939,28 @@
   </footer>
 
   <script>
-    // Mantra chips
-    const mantras = document.querySelectorAll('.mantra-chip');
+    const mainPhoto = document.getElementById('mainPhoto');
     const previewText = document.getElementById('previewText');
-    const overlayText = document.getElementById('overlayText');
-    mantras.forEach(chip => {
+
+    // Mantra chips — update both the shirt photo and the preview box
+    document.querySelectorAll('.mantra-chip').forEach(chip => {
       chip.addEventListener('click', () => {
-        mantras.forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.mantra-chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         const html = chip.dataset.mantra.replace(/\n/g, '<br>');
         previewText.innerHTML = html;
-        overlayText.innerHTML = html;
+        mainPhoto.src = 'shirts/' + chip.dataset.slug + '.jpg';
+        // deselect lifestyle thumb
+        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
       });
     });
 
-    // Photo thumbnails
-    const thumbs = document.querySelectorAll('.thumb');
-    const photos = document.querySelectorAll('.photo-main');
-    function showPhoto(id) {
-      photos.forEach(p => p.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-    }
-    thumbs.forEach(thumb => {
+    // Lifestyle photo thumbnails
+    document.querySelectorAll('.thumb').forEach(thumb => {
       thumb.addEventListener('click', () => {
-        thumbs.forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
         thumb.classList.add('active');
-        showPhoto(thumb.dataset.photo);
+        mainPhoto.src = thumb.dataset.src;
       });
     });
 
@@ -1018,12 +1013,21 @@
       });
     });
     // Submit mantra form
-    document.getElementById('mantraForm').addEventListener('submit', function(e) {
+    document.getElementById('mantraForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const mantra = document.getElementById('mantraInput').value;
       const email = document.getElementById('mantraEmail').value;
-      this.innerHTML = '<p class="submit-success" style="display:block;">Got it. We love it already.</p>';
-      // TODO: wire to Kit/email when backend is built
+      const btn = this.querySelector('button');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      try {
+        await fetch('/api/mantra', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, mantra }),
+        });
+      } catch (_) {}
+      this.innerHTML = '<p style="font-family:\'Cormorant Garamond\',serif;font-size:1.3rem;font-style:italic;color:var(--teal-hint);">Got it. We love it already.</p>';
     });
   </script>
 
