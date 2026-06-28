@@ -116,7 +116,10 @@
       color: var(--black);
       margin-bottom: 2rem;
     }
-    .hero-mantra { color: var(--teal-hint); }
+    .hero-gap { display: block; height: 0.4em; }
+    .hero-mantra { color: var(--black); }
+    .hero-one { color: var(--teal-hint); }
+    .hero-sub2 { margin-top: 0.25rem; margin-bottom: 2.5rem; }
     .hero-sub {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(1.2rem, 3vw, 1.6rem);
@@ -125,15 +128,7 @@
       color: var(--gray-text);
       max-width: 480px;
       line-height: 1.5;
-      margin-bottom: 0.5rem;
-    }
-    .hero-plus {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      color: var(--teal-hint);
-      margin-bottom: 2.5rem;
+      margin-bottom: 0.4rem;
     }
     .hero-cta {
       display: inline-block;
@@ -179,7 +174,7 @@
     }
     .marquee-track {
       display: inline-flex;
-      animation: marquee 28s linear infinite;
+      animation: marquee 56s linear infinite;
     }
     .marquee-track span {
       font-family: 'Space Grotesk', sans-serif;
@@ -605,6 +600,38 @@
     }
     .step-desc { font-size: 0.85rem; color: var(--gray-text); line-height: 1.6; }
 
+    /* OTHER PROJECTS */
+    .other-projects {
+      padding: 4rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--gray-light);
+      background: var(--off-white);
+    }
+    .other-eyebrow {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray-text);
+      margin-bottom: 1.5rem;
+    }
+    .other-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem 2rem;
+    }
+    .other-links a {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--gray-mid);
+      padding-bottom: 0.1rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .other-links a:hover { color: var(--teal-hint); border-color: var(--teal-hint); }
+
     /* SUBMIT MANTRA */
     .submit-section {
       padding: 6rem 2rem;
@@ -665,6 +692,13 @@
       transition: background 0.2s;
     }
     .submit-form button:hover { background: var(--teal-hint); }
+    .scroll-hint {
+      font-size: 0.6rem;
+      color: var(--teal-hint);
+      letter-spacing: 0.1em;
+      margin-left: 0.5rem;
+      animation: bounce 2s infinite;
+    }
     .submit-fine {
       font-size: 0.72rem;
       color: var(--gray-mid);
@@ -757,9 +791,9 @@
 
   <!-- HERO -->
   <section class="hero">
-    <h1 class="hero-headline">ONE SHIRT.<br><span class="hero-mantra">ONE MANTRA.</span></h1>
+    <h1 class="hero-headline">ONE SHIRT.<br><span class="hero-gap"></span><span class="hero-mantra"><span class="hero-one">ONE </span>MANTRA.</span></h1>
     <p class="hero-sub">The softest cotton you've ever worn.</p>
-    <p class="hero-plus">+ one rad mantra.</p>
+    <p class="hero-sub hero-sub2">+ one rad mantra.</p>
     <a href="#product" class="hero-cta">Choose your mantra</a>
     <p class="hero-einstein">Simplicity is genius. &nbsp;<span>— Albert Einstein</span></p>
     <p class="hero-scroll">↓ scroll</p>
@@ -807,10 +841,7 @@
       <div class="photo-stack">
         <img src="shirts/this-is-it.jpg" id="mainPhoto" class="photo-main" alt="The Mantra Tee" />
       </div>
-      <div class="photo-thumbs">
-        <button class="thumb active" data-model="man"><img src="mockup-man-blue.jpg" alt="Man" /></button>
-        <button class="thumb" data-model="woman"><img src="mockup-woman-blue.jpg" alt="Woman" /></button>
-      </div>
+      <div class="photo-thumbs" style="display:none;"></div>
     </div>
     <div class="product-info">
       <p class="product-tag">The Only Shirt We Sell</p>
@@ -824,7 +855,7 @@
       </div>
       <p class="color-name" id="colorName">Ice Blue</p>
 
-      <p class="mantra-label" style="margin-top:1.5rem;">Choose your mantra</p>
+      <p class="mantra-label" style="margin-top:1.5rem;">Choose your mantra <span class="scroll-hint">↓ scroll</span></p>
       <div class="mantra-grid" id="mantraGrid">
         <button class="mantra-chip active" data-mantra="This Is It" data-slug="this-is-it">This Is It</button>
         <button class="mantra-chip" data-mantra="Looking Nowhere&#10;Going Somewhere" data-slug="looking-nowhere-going-somewhere">Looking Nowhere Going Somewhere</button>
@@ -886,7 +917,7 @@
         <p><em>— Svetlana</em></p>
       </div>
       <div class="svet-bio">
-        <p>Svetlana Saitsky is a life and executive coach, facilitator, and artist who has spent the last two decades helping people find the words for things they couldn't quite name. Turns out she had a few of her own.</p>
+        <p>I started drawing my words as a kid and never stopped. Two decades of coaching later, my whole life still revolves around words — finding them, shaping them, giving them to people who needed them and didn't know it. One of my core values is beauty. So a shirt that is comfortable, beautiful, and carries a word worth living by? That's the trifecta. This shop created itself when it was ready. One hour. A volcano. You know how it goes.</p>
         <a href="https://svetlanasaitsky.com" target="_blank" class="bio-link">More about Svetlana →</a>
       </div>
     </div>
@@ -939,6 +970,17 @@
   <section class="final-cta">
     <h2>One shirt.<br>One <span class="teal">rad</span> mantra.<br>$38.</h2>
     <a href="#product" class="buy-btn">Choose your mantra ↑</a>
+  </section>
+
+  <!-- OTHER PROJECTS -->
+  <section class="other-projects">
+    <p class="other-eyebrow">Other projects</p>
+    <div class="other-links">
+      <a href="https://svetlanasaitsky.com" target="_blank">Svetlana Saitsky</a>
+      <a href="https://masterfullistening.com" target="_blank">Masterful Listening Podcast</a>
+      <a href="https://cryinginbeautifulplaces.com" target="_blank">Crying in Beautiful Places</a>
+      <a href="https://svetlanasaitsky.com/art" target="_blank">Mantra Art</a>
+    </div>
   </section>
 
   <!-- FOOTER -->
