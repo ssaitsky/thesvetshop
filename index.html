@@ -111,11 +111,12 @@
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(3.5rem, 10vw, 8rem);
       font-weight: 700;
-      line-height: 0.92;
+      line-height: 0.95;
       letter-spacing: -0.04em;
       color: var(--black);
       margin-bottom: 2rem;
     }
+    .hero-mantra { color: var(--teal-hint); }
     .hero-sub {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(1.2rem, 3vw, 1.6rem);
@@ -756,9 +757,9 @@
 
   <!-- HERO -->
   <section class="hero">
-    <h1 class="hero-headline">ONE<br>SHIRT.</h1>
+    <h1 class="hero-headline">ONE SHIRT.<br><span class="hero-mantra">ONE MANTRA.</span></h1>
     <p class="hero-sub">The softest cotton you've ever worn.</p>
-    <p class="hero-plus">+ one mantra.</p>
+    <p class="hero-plus">+ one rad mantra.</p>
     <a href="#product" class="hero-cta">Choose your mantra</a>
     <p class="hero-einstein">Simplicity is genius. &nbsp;<span>— Albert Einstein</span></p>
     <p class="hero-scroll">↓ scroll</p>
@@ -807,15 +808,14 @@
         <img src="shirts/this-is-it.jpg" id="mainPhoto" class="photo-main" alt="The Mantra Tee" />
       </div>
       <div class="photo-thumbs">
-        <button class="thumb active" data-src="shirts/this-is-it.jpg"><img src="mockup-couple-blue.jpg" alt="Couple" /></button>
-        <button class="thumb" data-src="mockup-woman-blue.jpg"><img src="mockup-woman-blue.jpg" alt="Woman" /></button>
-        <button class="thumb" data-src="mockup-man-blue.jpg"><img src="mockup-man-blue.jpg" alt="Man" /></button>
+        <button class="thumb active" data-model="man"><img src="mockup-man-blue.jpg" alt="Man" /></button>
+        <button class="thumb" data-model="woman"><img src="mockup-woman-blue.jpg" alt="Woman" /></button>
       </div>
     </div>
     <div class="product-info">
       <p class="product-tag">The Only Shirt We Sell</p>
-      <h2 class="product-name">The<br>Mantra<br>Tee</h2>
-      <p class="product-desc">Super soft 100% cotton. White. One color. One word, or a whole sentence. Worn by people who mean it.</p>
+      <h2 class="product-name">The Mantra Tee</h2>
+      <p class="product-desc">Two colors. One mantra. Waiting for its rad human.</p>
 
       <p class="mantra-label">Choose your color</p>
       <div class="color-row" id="colorRow">
@@ -828,7 +828,7 @@
       <div class="mantra-grid" id="mantraGrid">
         <button class="mantra-chip active" data-mantra="This Is It" data-slug="this-is-it">This Is It</button>
         <button class="mantra-chip" data-mantra="Looking Nowhere&#10;Going Somewhere" data-slug="looking-nowhere-going-somewhere">Looking Nowhere Going Somewhere</button>
-        <button class="mantra-chip" data-mantra="A Little Bit&#10;Of A Lot" data-slug="a-little-bit-of-a-lot">A Little Bit Of A Lot</button>
+        <button class="mantra-chip" data-mantra="I Am A Little Bit&#10;Of A Lot" data-slug="a-little-bit-of-a-lot">I Am A Little Bit Of A Lot</button>
         <button class="mantra-chip" data-mantra="Humble As Fuck" data-slug="humble-as-fuck">Humble As Fuck</button>
         <button class="mantra-chip" data-mantra="Pretty OK" data-slug="pretty-ok">Pretty OK</button>
         <button class="mantra-chip" data-mantra="You Can Have Your Cake&#10;Eat It Too&#10;and have a glass of milk." data-slug="cake-milk">You Can Have Your Cake Eat It Too And Have A Glass Of Milk</button>
@@ -837,7 +837,7 @@
         <button class="mantra-chip" data-mantra="Flexibility Is&#10;Opportunity" data-slug="flexibility-is-opportunity">Flexibility Is Opportunity</button>
         <button class="mantra-chip" data-mantra="When Is Now" data-slug="when-is-now">When Is Now</button>
         <button class="mantra-chip" data-mantra="I Stabilize At A&#10;Magical Frequency" data-slug="magical-frequency">I Stabilize At A Magical Frequency</button>
-        <button class="mantra-chip" data-mantra="Lose Your Shit&#10;Find Yourself" data-slug="lose-your-shit">Lose Your Shit Find Yourself</button>
+        <button class="mantra-chip" data-mantra="Lose Your Shit.&#10;Find Yourself" data-slug="lose-your-shit">Lose Your Shit. Find Yourself</button>
         <button class="mantra-chip" data-mantra="Direct Is Kind" data-slug="direct-is-kind">Direct Is Kind</button>
         <button class="mantra-chip" data-mantra="A Rad Life Is Made Of&#10;Detours Not Shortcuts" data-slug="rad-life-detours">A Rad Life Is Made Of Detours Not Shortcuts</button>
         <button class="mantra-chip" data-mantra="The More I Slow Down&#10;The More Time&#10;I Seem To Have" data-slug="slow-down">The More I Slow Down The More Time I Seem To Have</button>
@@ -950,44 +950,41 @@
     const mainPhoto = document.getElementById('mainPhoto');
     const previewText = document.getElementById('previewText');
     let currentSlug = 'this-is-it';
-    let currentColor = 'blue';
+    let currentModel = 'man';
 
-    // Mantra chips — swap shirt photo and update preview box
+    function updatePhoto() {
+      const suffix = currentModel === 'woman' ? '-woman' : '';
+      mainPhoto.style.opacity = '0';
+      setTimeout(() => {
+        mainPhoto.src = `shirts/${currentSlug}${suffix}.jpg`;
+        mainPhoto.style.opacity = '1';
+      }, 150);
+    }
+
     document.querySelectorAll('.mantra-chip').forEach(chip => {
       chip.addEventListener('click', () => {
         document.querySelectorAll('.mantra-chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         currentSlug = chip.dataset.slug;
-        mainPhoto.style.opacity = '0';
-        setTimeout(() => {
-          mainPhoto.src = `shirts/${currentSlug}.jpg`;
-          mainPhoto.style.opacity = '1';
-        }, 150);
         previewText.innerHTML = chip.dataset.mantra.replace(/\n/g, '<br>');
+        updatePhoto();
       });
     });
 
-    // Color swatch
-    document.querySelectorAll('.color-swatch').forEach(swatch => {
-      swatch.addEventListener('click', () => {
-        document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-        swatch.classList.add('active');
-        currentColor = swatch.dataset.color;
-        document.getElementById('colorName').textContent = currentColor === 'black' ? 'Black Heather' : 'Ice Blue';
-        // TODO: swap to black shirt composites once generated
-      });
-    });
-
-    // Lifestyle thumbnails
     document.querySelectorAll('.thumb').forEach(thumb => {
       thumb.addEventListener('click', () => {
         document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
         thumb.classList.add('active');
-        mainPhoto.style.opacity = '0';
-        setTimeout(() => {
-          mainPhoto.src = thumb.dataset.src;
-          mainPhoto.style.opacity = '1';
-        }, 150);
+        currentModel = thumb.dataset.model;
+        updatePhoto();
+      });
+    });
+
+    document.querySelectorAll('.color-swatch').forEach(swatch => {
+      swatch.addEventListener('click', () => {
+        document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+        swatch.classList.add('active');
+        document.getElementById('colorName').textContent = swatch.dataset.color === 'black' ? 'Black Heather' : 'Ice Blue';
       });
     });
 
