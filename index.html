@@ -438,12 +438,13 @@
       gap: 0.5rem;
     }
     .detail-row {
-      display: flex;
-      gap: 0.75rem;
       font-size: 0.78rem;
       color: var(--gray-text);
+      padding-left: 1.25rem;
+      position: relative;
     }
-    .detail-row::before { content: "—"; color: var(--gray-mid); }
+    .detail-row::before { content: "—"; color: var(--gray-mid); position: absolute; left: 0; }
+    .detail-row a { color: inherit; }
 
     /* QUOTE BREAK */
     .quote-break {
