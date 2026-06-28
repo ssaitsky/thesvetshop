@@ -847,8 +847,6 @@
       <div class="photo-thumbs" style="display:none;"></div>
     </div>
     <div class="product-info">
-      <p class="product-desc">The softest unisex 100% cotton tee on the market. One shirt. Because we all have enough decisions to make.</p>
-
       <p class="mantra-label">Choose your color</p>
       <div class="color-row" id="colorRow">
         <button class="color-swatch active" data-color="blue" style="background:#b8d8e3;" title="Ice Blue" aria-label="Ice Blue"></button>
@@ -887,9 +885,7 @@
       <a href="#" class="buy-btn" id="buyBtn">Get the shirt — $38</a>
 
       <div class="product-details">
-        <div class="detail-row">Bella+Canvas 3001 — the softest unisex tee on the market</div>
-        <div class="detail-row">100% Airlume combed ring-spun cotton</div>
-        <div class="detail-row">White. One style. One shirt. That's the whole menu.</div>
+        <div class="detail-row">The softest unisex 100% cotton tee on the market. One shirt. Because we all have enough decisions to make.</div>
         <div class="detail-row">Print ships within 3 business days</div>
       </div>
     </div>
@@ -992,6 +988,7 @@
   <script>
     if (history.scrollRestoration) history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
+    window.addEventListener('pageshow', () => window.scrollTo(0, 0));
 
     const mainPhoto = document.getElementById('mainPhoto');
     const previewText = document.getElementById('previewText');
