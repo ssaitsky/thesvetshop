@@ -1008,10 +1008,11 @@
 
     function buildThumbs(slug) {
       const order = modelOrders[slug] || ['man','woman','couple','shirt'];
+      const darkSuffix = currentColor === 'black' ? '-dark' : '';
       thumbsWrap.innerHTML = '';
       order.forEach((model, i) => {
         const img = document.createElement('img');
-        img.src = `shirts/${slug}-${model}.jpg`;
+        img.src = `shirts/${slug}-${model}${darkSuffix}.jpg`;
         img.className = 'thumb' + (i === 0 ? ' active' : '');
         img.dataset.model = model;
         img.title = modelLabels[model];
