@@ -598,6 +598,33 @@
     }
     .step-desc { font-size: 0.85rem; color: var(--gray-text); line-height: 1.6; }
 
+    /* SIZE GUIDE */
+    .size-guide {
+      margin-top: 1.25rem;
+      border-top: 1px solid var(--gray-light);
+      padding-top: 1rem;
+    }
+    .size-guide summary {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: var(--black);
+    }
+    .size-table {
+      width: 100%;
+      margin-top: 0.75rem;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+    .size-table th, .size-table td {
+      text-align: left;
+      padding: 0.4rem 0.5rem;
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .size-table th { font-weight: 600; color: var(--gray-text); }
+
     /* OTHER PROJECTS */
     .other-projects {
       padding: 4rem 2rem;
@@ -880,8 +907,26 @@
 
       <div class="product-details">
         <div class="detail-row">The softest unisex 100% cotton tee on the market. One shirt. Because we all have enough decisions to make.</div>
-        <div class="detail-row">Ships within 3 business days</div>
-        <div class="detail-row" style="font-weight:600; color: var(--black);">Each shirt is made to order. All sales final. If something arrives wrong or damaged, email hello@svetlanasaitsky.com and we'll make it right.</div>
+        <div class="detail-row">Unisex relaxed fit. If you prefer a fitted look, size down one.</div>
+        <div class="detail-row">Machine wash cold, tumble dry low. No bleach. No iron on print.</div>
+        <div class="detail-row">Ships within 3 business days. US delivery 3–5 days after that. International varies.</div>
+        <div class="detail-row" style="font-weight:600; color: var(--black);">Each shirt is made to order. All sales final. If something arrives wrong or damaged, email <a href="mailto:hello@svetlanasaitsky.com" style="color:inherit;">hello@svetlanasaitsky.com</a> and we'll make it right.</div>
+
+        <details class="size-guide">
+          <summary>Size guide</summary>
+          <table class="size-table">
+            <thead><tr><th>Size</th><th>Chest (in)</th><th>Length (in)</th></tr></thead>
+            <tbody>
+              <tr><td>XS</td><td>31–34</td><td>27</td></tr>
+              <tr><td>S</td><td>34–37</td><td>28</td></tr>
+              <tr><td>M</td><td>38–41</td><td>29</td></tr>
+              <tr><td>L</td><td>42–45</td><td>30</td></tr>
+              <tr><td>XL</td><td>46–49</td><td>31</td></tr>
+              <tr><td>2XL</td><td>50–53</td><td>32</td></tr>
+              <tr><td>3XL</td><td>54–57</td><td>33</td></tr>
+            </tbody>
+          </table>
+        </details>
       </div>
     </div>
   </section>
@@ -978,6 +1023,7 @@
   <footer>
     <p>© 2026 The Svet Shop &nbsp;·&nbsp; by <a href="https://svetlanasaitsky.com" target="_blank">Svetlana Saitsky</a></p>
     <p style="margin-top:0.5rem;">Est. eighth grade. Launched on a volcano in San Marcos La Laguna, Guatemala.</p>
+    <p style="margin-top:1rem;">Questions? <a href="mailto:hello@svetlanasaitsky.com">hello@svetlanasaitsky.com</a></p>
   </footer>
 
   <script>
