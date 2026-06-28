@@ -116,19 +116,16 @@
       color: var(--black);
       margin-bottom: 2rem;
     }
-    .hero-gap { display: block; height: 0.4em; }
-    .hero-mantra { color: var(--black); }
-    .hero-one { color: var(--teal-hint); }
-    .hero-sub2 { margin-top: 0.25rem; margin-bottom: 2.5rem; }
     .hero-sub {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(1.2rem, 3vw, 1.6rem);
       font-weight: 300;
       font-style: italic;
       color: var(--gray-text);
-      max-width: 480px;
+      max-width: 600px;
       line-height: 1.5;
-      margin-bottom: 0.4rem;
+      margin-bottom: 2.5rem;
+      white-space: normal;
     }
     .hero-cta {
       display: inline-block;
@@ -146,12 +143,12 @@
     .hero-cta:hover { background: var(--teal-hint); transform: translateY(-1px); }
     .hero-einstein {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
+      font-size: clamp(1.4rem, 3vw, 2rem);
       font-style: italic;
-      color: var(--gray-text);
+      color: var(--teal-hint);
       margin-top: 1.5rem;
     }
-    .hero-einstein span { font-style: normal; font-size: 1rem; letter-spacing: 0.05em; }
+    .hero-einstein span { font-style: normal; font-size: 1.1rem; letter-spacing: 0.05em; }
     .hero-scroll {
       margin-top: 5rem;
       font-size: 0.7rem;
@@ -791,9 +788,8 @@
 
   <!-- HERO -->
   <section class="hero">
-    <h1 class="hero-headline">ONE SHIRT.<br><span class="hero-gap"></span><span class="hero-mantra"><span class="hero-one">ONE </span>MANTRA.</span></h1>
-    <p class="hero-sub">The softest cotton you've ever worn.</p>
-    <p class="hero-sub hero-sub2">+ one rad mantra.</p>
+    <h1 class="hero-headline">ONE SHIRT.<br>YOUR MANTRA.</h1>
+    <p class="hero-sub">The softest cotton you've ever worn. + one rad mantra.</p>
     <a href="#product" class="hero-cta">Choose your mantra</a>
     <p class="hero-einstein">Simplicity is genius. &nbsp;<span>— Albert Einstein</span></p>
     <p class="hero-scroll">↓ scroll</p>
