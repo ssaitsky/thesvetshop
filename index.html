@@ -140,6 +140,14 @@
       transition: background 0.2s, transform 0.15s;
     }
     .hero-cta:hover { background: var(--teal-hint); transform: translateY(-1px); }
+    .hero-einstein {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-style: italic;
+      color: var(--gray-text);
+      margin-top: 1.5rem;
+    }
+    .hero-einstein span { font-style: normal; font-size: 0.8rem; letter-spacing: 0.05em; }
     .hero-scroll {
       margin-top: 5rem;
       font-size: 0.7rem;
@@ -458,6 +466,13 @@
       margin: 0 auto;
     }
     .big-quote .teal { color: var(--teal-hint); }
+    .quote-sig {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      color: var(--gray-text);
+      margin-top: 1.5rem;
+    }
 
     /* STORY */
     .story {
@@ -490,6 +505,27 @@
       max-width: 440px;
     }
     .story-body p + p { margin-top: 1.25rem; }
+    .svet-bio {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--gray-light);
+      max-width: 440px;
+    }
+    .svet-bio p {
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: var(--gray-text);
+    }
+    .bio-link {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      color: var(--teal-hint);
+      text-decoration: none;
+    }
+    .bio-link:hover { color: var(--black); }
     .story-aside {
       background: var(--black);
       display: flex;
@@ -565,6 +601,81 @@
     }
     .step-desc { font-size: 0.85rem; color: var(--gray-text); line-height: 1.6; }
 
+    /* SUBMIT MANTRA */
+    .submit-section {
+      padding: 6rem 2rem;
+      background: var(--off-white);
+      border-top: 1px solid var(--gray-light);
+      text-align: center;
+    }
+    .submit-inner { max-width: 560px; margin: 0 auto; }
+    .submit-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--teal-hint);
+      margin-bottom: 1rem;
+    }
+    .submit-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+    }
+    .submit-desc {
+      font-size: 0.95rem;
+      color: var(--gray-text);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .submit-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .submit-form input {
+      padding: 0.9rem 1.25rem;
+      border: 1.5px solid var(--gray-mid);
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      background: var(--white);
+      color: var(--black);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .submit-form input:focus { border-color: var(--black); }
+    .submit-form button {
+      padding: 0.9rem;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .submit-form button:hover { background: var(--teal-hint); }
+    .submit-fine {
+      font-size: 0.72rem;
+      color: var(--gray-mid);
+      margin-top: 1rem;
+      letter-spacing: 0.05em;
+    }
+    .submit-success {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--teal-hint);
+      display: none;
+      margin-top: 1rem;
+    }
+
     /* FINAL CTA */
     .final-cta {
       padding: 8rem 2rem;
@@ -636,10 +747,10 @@
 
   <!-- HERO -->
   <section class="hero">
-    <p class="hero-eyebrow">Est. eighth grade. Launched tonight.</p>
     <h1 class="hero-headline">ONE<br>SHIRT.<br>YOUR<br>WORDS.</h1>
-    <p class="hero-sub">The softest white cotton you've ever worn. One mantra. That's the whole thing.</p>
+    <p class="hero-sub">The softest cotton you've ever worn. One mantra.</p>
     <a href="#product" class="hero-cta">Choose your mantra</a>
+    <p class="hero-einstein">Simplicity is genius. &nbsp;<span>— Albert Einstein</span></p>
     <p class="hero-scroll">↓ scroll</p>
   </section>
 
@@ -649,13 +760,33 @@
       <span>Looking Nowhere Going Somewhere</span><span class="dot">·</span>
       <span>This Is It</span><span class="dot">·</span>
       <span>A Little Bit Of A Lot</span><span class="dot">·</span>
-      <span>Humble As F*ck</span><span class="dot">·</span>
+      <span>Humble As Fuck</span><span class="dot">·</span>
       <span>Pretty OK</span><span class="dot">·</span>
+      <span>You Can Have Your Cake Eat It Too And Have A Glass Of Milk</span><span class="dot">·</span>
+      <span>A No Is A Yes To Something Better</span><span class="dot">·</span>
+      <span>I Am Exactly Perfectly On Time</span><span class="dot">·</span>
+      <span>Flexibility Is Opportunity</span><span class="dot">·</span>
+      <span>When Is Now</span><span class="dot">·</span>
+      <span>I Stabilize At A Magical Frequency</span><span class="dot">·</span>
+      <span>Lose Your Shit Find Yourself</span><span class="dot">·</span>
+      <span>Direct Is Kind</span><span class="dot">·</span>
+      <span>A Rad Life Is Made Of Detours Not Shortcuts</span><span class="dot">·</span>
+      <span>The More I Slow Down The More Time I Seem To Have</span><span class="dot">·</span>
       <span>Looking Nowhere Going Somewhere</span><span class="dot">·</span>
       <span>This Is It</span><span class="dot">·</span>
       <span>A Little Bit Of A Lot</span><span class="dot">·</span>
-      <span>Humble As F*ck</span><span class="dot">·</span>
+      <span>Humble As Fuck</span><span class="dot">·</span>
       <span>Pretty OK</span><span class="dot">·</span>
+      <span>You Can Have Your Cake Eat It Too And Have A Glass Of Milk</span><span class="dot">·</span>
+      <span>A No Is A Yes To Something Better</span><span class="dot">·</span>
+      <span>I Am Exactly Perfectly On Time</span><span class="dot">·</span>
+      <span>Flexibility Is Opportunity</span><span class="dot">·</span>
+      <span>When Is Now</span><span class="dot">·</span>
+      <span>I Stabilize At A Magical Frequency</span><span class="dot">·</span>
+      <span>Lose Your Shit Find Yourself</span><span class="dot">·</span>
+      <span>Direct Is Kind</span><span class="dot">·</span>
+      <span>A Rad Life Is Made Of Detours Not Shortcuts</span><span class="dot">·</span>
+      <span>The More I Slow Down The More Time I Seem To Have</span><span class="dot">·</span>
     </div>
   </div>
 
@@ -667,9 +798,6 @@
         <img src="mockup-woman-blue.jpg" class="photo-main" id="photo-blue-woman" alt="Woman wearing the ice blue tee" />
         <img src="mockup-man-blue.jpg" class="photo-main" id="photo-blue-man" alt="Man wearing the ice blue tee" />
         <img src="mockup-couple-black.jpg" class="photo-main" id="photo-black-couple" alt="Two people wearing the black tee" />
-        <div class="photo-overlay">
-          <div class="overlay-text" id="overlayText">LOOKING NOWHERE<br>GOING SOMEWHERE</div>
-        </div>
       </div>
       <div class="photo-thumbs" id="photoThumbs">
         <button class="thumb active" data-photo="photo-blue-couple"><img src="mockup-couple-blue.jpg" alt="" /></button>
@@ -731,7 +859,8 @@
 
   <!-- QUOTE BREAK -->
   <div class="quote-break">
-    <p class="big-quote">"Say it loud <span class="teal">without</span> opening your mouth."</p>
+    <p class="big-quote">Say it loud <span class="teal">without</span> opening your mouth.</p>
+    <p class="quote-sig">— Svetlana</p>
   </div>
 
   <!-- STORY -->
@@ -747,6 +876,10 @@
         <p>Then one night, sitting on a volcano in San Marcos, Guatemala, a little elevated, a lot inspired, it became obvious: I already had the mantras. I already had the words. I'd been making them for years — in my art, in my work, in everything I do.</p>
         <p>All I needed was a super soft cotton t-shirt and somewhere to put them.</p>
         <p>It only took me 25 years to build this in an hour. Life is funny.</p>
+      </div>
+      <div class="svet-bio">
+        <p>Svetlana Saitsky is a life and executive coach, facilitator, and the person behind the words. She's been collecting mantras her whole life — in her art, her coaching, her conversations, and her notes app at 2am. This shop is the inevitable result.</p>
+        <a href="https://svetlanasaitsky.com" target="_blank" class="bio-link">More about Svetlana →</a>
       </div>
     </div>
     <div class="story-aside">
@@ -779,16 +912,31 @@
     </div>
   </section>
 
+  <!-- SUBMIT MANTRA -->
+  <section class="submit-section">
+    <div class="submit-inner">
+      <p class="submit-eyebrow">Got words?</p>
+      <h2 class="submit-headline">Submit your mantra.</h2>
+      <p class="submit-desc">Have a phrase living rent-free in your head? Send it. If it makes the cut, we'll make it a shirt — and you'll get one first.</p>
+      <form class="submit-form" id="mantraForm">
+        <input type="text" placeholder="Your mantra..." id="mantraInput" maxlength="80" required />
+        <input type="email" placeholder="Your email" id="mantraEmail" required />
+        <button type="submit">Submit it</button>
+      </form>
+      <p class="submit-fine">No spam. Ever. Just mantras.</p>
+    </div>
+  </section>
+
   <!-- FINAL CTA -->
   <section class="final-cta">
-    <h2>Get the<br><span class="teal">damn</span><br>shirt.</h2>
-    <p class="final-cta-sub">One shirt. Your words. $38.</p>
+    <h2>One shirt.<br>One <span class="teal">rad</span> mantra.<br>$38.</h2>
     <a href="#product" class="buy-btn">Choose your mantra ↑</a>
   </section>
 
   <!-- FOOTER -->
   <footer>
-    <p>© 2026 The Svet Shop &nbsp;·&nbsp; by <a href="https://svetlanasaitsky.com" target="_blank">Svetlana Saitsky</a> &nbsp;·&nbsp; Built on a volcano in San Marcos, Guatemala</p>
+    <p>© 2026 The Svet Shop &nbsp;·&nbsp; by <a href="https://svetlanasaitsky.com" target="_blank">Svetlana Saitsky</a></p>
+    <p style="margin-top:0.5rem;">Est. eighth grade. Launched on a volcano in San Marcos, Guatemala.</p>
   </footer>
 
   <script>
@@ -868,6 +1016,14 @@
         });
         showPhoto(colorPhotos[color][0]);
       });
+    });
+    // Submit mantra form
+    document.getElementById('mantraForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const mantra = document.getElementById('mantraInput').value;
+      const email = document.getElementById('mantraEmail').value;
+      this.innerHTML = '<p class="submit-success" style="display:block;">Got it. We love it already.</p>';
+      // TODO: wire to Kit/email when backend is built
     });
   </script>
 
