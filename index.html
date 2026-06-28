@@ -985,6 +985,9 @@
   </footer>
 
   <script>
+    if (history.scrollRestoration) history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+
     const mainPhoto = document.getElementById('mainPhoto');
     const previewText = document.getElementById('previewText');
     let currentSlug = 'this-is-it';
