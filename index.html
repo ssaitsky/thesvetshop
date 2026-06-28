@@ -195,62 +195,48 @@
       border-top: 1px solid var(--gray-light);
     }
     .product-visual {
-      background: var(--gray-light);
       display: flex;
       flex-direction: column;
       align-items: stretch;
-      justify-content: flex-end;
-      padding: 0;
-      position: relative;
-      overflow: hidden;
       gap: 0;
     }
-    .photo-stack {
-      position: relative;
-      width: 100%;
+
+    /* CSS shirt preview card — updates live when mantra is clicked */
+    .shirt-card {
       flex: 1;
-      min-height: 500px;
-    }
-    .photo-main {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center top;
-    }
-    /* overlay text on photo — no background box, just the words */
-    .photo-overlay {
-      position: absolute;
-      inset: 0;
+      min-height: 420px;
+      background: #c2dde4;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
-      pointer-events: none;
-      padding-bottom: 22%;
+      padding: 3rem 2.5rem;
+      transition: background 0.3s;
     }
-    .overlay-text {
+    .shirt-card.black { background: #2a2a2a; }
+    .shirt-card-text {
       font-family: 'EdoSZ', sans-serif;
-      font-size: clamp(1.1rem, 3vw, 2.2rem);
+      font-size: clamp(2rem, 5vw, 4rem);
       line-height: 1.1;
       text-align: center;
       color: #0a0a0a;
       text-transform: uppercase;
       letter-spacing: 0.02em;
-      max-width: 75%;
+      max-width: 85%;
+      transition: opacity 0.15s;
     }
-    .overlay-text.on-black { color: var(--white); }
+    .shirt-card.black .shirt-card-text { color: #ffffff; }
 
+    /* lifestyle photo thumbnails */
     .photo-thumbs {
       display: flex;
       gap: 0.5rem;
       padding: 0.75rem 1rem;
-      background: rgba(255,255,255,0.9);
-      backdrop-filter: blur(4px);
+      background: var(--gray-light);
+      border-top: 1px solid var(--gray-mid);
     }
     .thumb {
-      width: 52px;
-      height: 52px;
+      width: 64px;
+      height: 64px;
       border: 2px solid transparent;
       border-radius: 2px;
       overflow: hidden;
@@ -259,9 +245,29 @@
       background: none;
       transition: border-color 0.15s;
     }
-    .thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
     .thumb.active { border-color: var(--black); }
     .thumb:hover { border-color: var(--gray-mid); }
+
+    /* lifestyle photo modal/lightbox on thumb click */
+    .photo-lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-lightbox.open { display: flex; }
+    .photo-lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+    .lightbox-close {
+      position: absolute;
+      top: 1.5rem; right: 1.5rem;
+      background: none; border: none;
+      color: white; font-size: 2rem;
+      cursor: pointer; line-height: 1;
+    }
 
     .product-info {
       display: flex;
@@ -725,18 +731,14 @@
     @media (max-width: 768px) {
       nav { padding: 1rem 1.25rem; }
 
-      /* Product: photo top (fixed height), chips visible below on same screen */
       .product { grid-template-columns: 1fr; min-height: 0; }
-      .product-visual { padding: 0; min-height: 0; height: 52vw; max-height: 340px; }
-      .photo-stack { min-height: 0; height: 100%; }
-      .photo-main { object-position: center 10%; }
-      .overlay-text { font-size: clamp(0.85rem, 4.5vw, 1.4rem); }
-      .photo-overlay { padding-bottom: 10%; }
+      .shirt-card { min-height: 260px; padding: 2rem 1.5rem; }
+      .shirt-card-text { font-size: clamp(1.6rem, 10vw, 3rem); }
       .photo-thumbs { padding: 0.5rem 0.75rem; }
-      .thumb { width: 38px; height: 38px; }
+      .thumb { width: 48px; height: 48px; }
 
       .product-info { padding: 1.5rem 1.25rem; border-left: none; border-top: 1px solid var(--gray-light); }
-      .mantra-grid { max-height: 180px; }
+      .mantra-grid { max-height: 200px; }
 
       .story { grid-template-columns: 1fr; }
       .story-text { padding: 3.5rem 1.5rem; }
@@ -802,13 +804,18 @@
   <!-- PRODUCT -->
   <section class="product" id="product">
     <div class="product-visual">
-      <div class="photo-stack">
-        <img src="mockup-couple-blue.jpg" class="photo-main" id="mainPhoto" alt="The Mantra Tee" />
+      <div class="shirt-card" id="shirtCard">
+        <p class="shirt-card-text" id="shirtCardText">THIS IS IT</p>
       </div>
-      <div class="photo-thumbs" id="photoThumbs">
-        <button class="thumb active" data-src="mockup-couple-blue.jpg"><img src="mockup-couple-blue.jpg" alt="Couple in ice blue" /></button>
+      <div class="photo-thumbs">
+        <button class="thumb" data-src="mockup-couple-blue.jpg"><img src="mockup-couple-blue.jpg" alt="Couple in ice blue" /></button>
         <button class="thumb" data-src="mockup-woman-blue.jpg"><img src="mockup-woman-blue.jpg" alt="Woman in ice blue" /></button>
         <button class="thumb" data-src="mockup-man-blue.jpg"><img src="mockup-man-blue.jpg" alt="Man in ice blue" /></button>
+      </div>
+      <!-- lightbox for lifestyle photos -->
+      <div class="photo-lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">×</button>
+        <img src="" id="lightboxImg" alt="" />
       </div>
     </div>
     <div class="product-info">
@@ -946,40 +953,47 @@
   </footer>
 
   <script>
-    const mainPhoto = document.getElementById('mainPhoto');
+    const shirtCard = document.getElementById('shirtCard');
+    const shirtCardText = document.getElementById('shirtCardText');
     const previewText = document.getElementById('previewText');
-    const overlayText = document.getElementById('overlayText');
 
+    // Mantra chips — update shirt card and preview box instantly
     document.querySelectorAll('.mantra-chip').forEach(chip => {
       chip.addEventListener('click', () => {
         document.querySelectorAll('.mantra-chip').forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         const html = chip.dataset.mantra.replace(/\n/g, '<br>');
+        shirtCardText.style.opacity = '0';
+        setTimeout(() => {
+          shirtCardText.innerHTML = html;
+          shirtCardText.style.opacity = '1';
+        }, 120);
         previewText.innerHTML = html;
-        overlayText.innerHTML = html;
       });
     });
 
-    document.querySelectorAll('.thumb').forEach(thumb => {
-      thumb.addEventListener('click', () => {
-        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
-        thumb.classList.add('active');
-        mainPhoto.src = thumb.dataset.src;
-      });
-    });
-
-    // Color swatch switches photo set and overlay text color
+    // Color swatch — flip shirt card color
     document.querySelectorAll('.color-swatch').forEach(swatch => {
       swatch.addEventListener('click', () => {
         document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
         swatch.classList.add('active');
         const isBlack = swatch.dataset.color === 'black';
         document.getElementById('colorName').textContent = isBlack ? 'Black Heather' : 'Ice Blue';
-        overlayText.classList.toggle('on-black', isBlack);
-        mainPhoto.src = isBlack ? 'mockup-couple-black.jpg' : 'mockup-couple-blue.jpg';
-        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+        shirtCard.classList.toggle('black', isBlack);
       });
     });
+
+    // Lifestyle photo thumbnails — open lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    document.querySelectorAll('.thumb').forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        lightboxImg.src = thumb.dataset.src;
+        lightbox.classList.add('open');
+      });
+    });
+    document.getElementById('lightboxClose').addEventListener('click', () => lightbox.classList.remove('open'));
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
 
     // Color swatches
     const swatches = document.querySelectorAll('.color-swatch');
