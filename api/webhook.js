@@ -4,17 +4,25 @@ const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 const RESEND_API_KEY = process.env.Resend_API_Key;
 const NOTIFY_EMAIL = 'svetlana.thisisit@gmail.com';
 
-// Printful variant IDs for Bella+Canvas 3001
-// Ice Blue = color id for "Heather Ice Blue", Black Heather = "Black Heather"
-// These are the Printful variant IDs — size order: XS, S, M, L, XL, 2XL, 3XL
-const VARIANTS = {
-  blue: {
-    XS:  '10870', S: '10871', M: '10872', L: '10873', XL: '10874', '2XL': '10875', '3XL': '10876',
-  },
-  black: {
-    XS:  '10099', S: '10100', M: '10101', L: '10102', XL: '10103', '2XL': '10104', '3XL': '10105',
-  },
+// Printful product template IDs — one per mantra+color combo
+// Mantra text (lowercase) → { blue: templateId, black: templateId }
+const PRODUCT_TEMPLATES = {
+  'this is it':                                          { blue: '104393357', black: '104409277' },
+  "i'm pretty ok":                                       { blue: '104407970', black: '104410004' },
+  'when is now':                                         { blue: '104408792', black: '104409171' },
+  'a no is a yes to something better':                   { blue: '104408238', black: '104409834' },
+  'i am exactly perfectly on time':                      { blue: '104408137', black: '104409737' },
+  'flexibility is opportunity':                          { blue: '104408441', black: '104409521' },
+  'i stabilize at a magical frequency':                  { blue: '104408650', black: '104409410' },
+  'the more i slow down the more time i seem to have':  { blue: '104408850', black: '104409048' },
 };
+
+function getTemplateId(mantra, color) {
+  const key = mantra.toLowerCase().trim();
+  const entry = PRODUCT_TEMPLATES[key];
+  if (!entry) return null;
+  return color === 'black' ? entry.black : entry.blue;
+}
 
 function colorKey(colorLabel) {
   return colorLabel?.toLowerCase().includes('black') ? 'black' : 'blue';
@@ -22,10 +30,14 @@ function colorKey(colorLabel) {
 
 async function createPrintfulOrder(session) {
   const meta = session.metadata || {};
-  const mantra = meta.mantra || 'Unknown';
+  const mantra = meta.mantra || '';
   const color = colorKey(meta.color);
   const size = meta.size || 'M';
-  const variantId = VARIANTS[color]?.[size];
+  const templateId = getTemplateId(mantra, color);
+
+  if (!templateId) {
+    throw new Error(`No Printful template found for mantra="${mantra}" color="${color}"`);
+  }
 
   const shipping = session.shipping_details || session.shipping || {};
   const addr = shipping.address || {};
@@ -45,18 +57,15 @@ async function createPrintfulOrder(session) {
     },
     items: [
       {
-        variant_id: variantId,
+        product_template_id: templateId,
         quantity: 1,
-        name: `The Mantra Tee — ${mantra}`,
+        size,
+        retail_price: '44.00',
       },
     ],
-    retail_costs: {
-      currency: 'USD',
-      subtotal: '38.00',
-    },
   };
 
-  const res = await fetch(`https://api.printful.com/orders`, {
+  const res = await fetch('https://api.printful.com/orders', {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${PRINTFUL_API_TOKEN}`,
@@ -115,7 +124,6 @@ export default async function handler(req, res) {
       console.log('Printful order created:', order?.result?.id);
     } catch (err) {
       console.error('Printful order failed:', err.message);
-      // Still return 200 so Stripe doesn't retry — log and handle manually
     }
   }
 
@@ -130,7 +138,6 @@ export default async function handler(req, res) {
   return res.status(200).json({ received: true });
 }
 
-// Read raw body for signature verification
 function getRawBody(req) {
   return new Promise((resolve, reject) => {
     let data = '';
@@ -140,7 +147,6 @@ function getRawBody(req) {
   });
 }
 
-// Minimal Stripe webhook signature verification (no SDK needed)
 function verifyStripeWebhook(payload, header, secret) {
   const crypto = require('crypto');
   const parts = header.split(',').reduce((acc, part) => {
@@ -155,11 +161,7 @@ function verifyStripeWebhook(payload, header, secret) {
   const expected = crypto.createHmac('sha256', secret).update(signed).digest('hex');
 
   if (expected !== sig) throw new Error('Invalid signature');
-
-  // Reject if older than 5 minutes
-  if (Math.abs(Date.now() / 1000 - parseInt(timestamp)) > 300) {
-    throw new Error('Timestamp too old');
-  }
+  if (Math.abs(Date.now() / 1000 - parseInt(timestamp)) > 300) throw new Error('Timestamp too old');
 
   return JSON.parse(payload);
 }
