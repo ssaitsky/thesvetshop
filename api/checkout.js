@@ -26,7 +26,7 @@ export default async function handler(req, res) {
         'line_items[0][price_data][currency]': 'usd',
         'line_items[0][price_data][product_data][name]': `The Mantra Tee — ${mantra}`,
         'line_items[0][price_data][product_data][description]': `${colorLabel} · Size ${size} · "${mantra}"`,
-        'line_items[0][price_data][unit_amount]': '3800',
+        'line_items[0][price_data][unit_amount]': '4400',
         'line_items[0][quantity]': '1',
         'shipping_address_collection[allowed_countries][0]': 'US',
         'shipping_address_collection[allowed_countries][1]': 'CA',
