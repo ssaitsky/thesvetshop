@@ -787,6 +787,115 @@
     }
     footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
 
+    /* WELCOME POPUP */
+    .welcome-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .welcome-overlay.open { display: flex; }
+    .welcome-box {
+      background: var(--white);
+      max-width: 420px;
+      width: 100%;
+      border-radius: 4px;
+      padding: 2.5rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+    .welcome-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--gray-text);
+      line-height: 1;
+    }
+    .welcome-eyebrow {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--teal-hint);
+      margin-bottom: 0.75rem;
+    }
+    .welcome-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .welcome-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gray-text);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .welcome-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+    .welcome-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--gray-mid);
+      border-radius: 2px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .welcome-input:focus { border-color: var(--black); }
+    .welcome-submit {
+      width: 100%;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 0.85rem;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: background 0.2s;
+    }
+    .welcome-submit:hover { background: var(--teal-hint); }
+    .welcome-spam {
+      font-size: 0.65rem;
+      color: var(--gray-text);
+      margin-top: 0.75rem;
+    }
+    .welcome-success {
+      display: none;
+    }
+    .welcome-success-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .welcome-success-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--gray-text);
+      line-height: 1.5;
+    }
+
     /* SIZE MODAL */
     .modal-overlay {
       display: none;
@@ -1022,6 +1131,27 @@
     </div>
   </section>
 
+  <!-- WELCOME POPUP -->
+  <div class="welcome-overlay" id="welcomeOverlay">
+    <div class="welcome-box">
+      <button class="welcome-close" id="welcomeClose">×</button>
+      <p class="welcome-eyebrow">Welcome, rad human</p>
+      <h2 class="welcome-title">It's so rad that you found us.</h2>
+      <p class="welcome-sub">Drop your email and we'll send you<br>a little gift. Our treat.</p>
+      <div class="welcome-form-wrap">
+        <form class="welcome-form" id="welcomeForm">
+          <input class="welcome-input" type="email" placeholder="your@email.com" required />
+          <button class="welcome-submit" type="submit">Send me the gift</button>
+        </form>
+        <p class="welcome-spam">Check your spam if you don't see it — sometimes the good stuff ends up there.</p>
+      </div>
+      <div class="welcome-success" id="welcomeSuccess">
+        <p class="welcome-success-title">You're in. Check your email.</p>
+        <p class="welcome-success-sub">Your promo code is on its way.<br>Go pick your mantra.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- SIZE MODAL -->
   <div class="modal-overlay" id="sizeModal">
     <div class="modal">
@@ -1220,6 +1350,40 @@
         updatePhoto();
       });
     });
+
+    // Welcome popup
+    const welcomeOverlay = document.getElementById('welcomeOverlay');
+    const welcomeForm = document.getElementById('welcomeForm');
+    const welcomeSuccess = document.getElementById('welcomeSuccess');
+
+    function closeWelcome() {
+      welcomeOverlay.classList.remove('open');
+      localStorage.setItem('svetshopp_welcome_seen', '1');
+    }
+
+    document.getElementById('welcomeClose').addEventListener('click', closeWelcome);
+    welcomeOverlay.addEventListener('click', (e) => { if (e.target === welcomeOverlay) closeWelcome(); });
+
+    welcomeForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = welcomeForm.querySelector('input').value;
+      try {
+        await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, source: 'svet-shop-welcome', formId: '9625240' }),
+        });
+      } catch (err) { console.error(err); }
+      welcomeForm.style.display = 'none';
+      document.querySelector('.welcome-spam').style.display = 'none';
+      welcomeSuccess.style.display = 'block';
+      localStorage.setItem('svetshopp_welcome_seen', '1');
+      setTimeout(closeWelcome, 3000);
+    });
+
+    if (!localStorage.getItem('svetshopp_welcome_seen')) {
+      setTimeout(() => welcomeOverlay.classList.add('open'), 5000);
+    }
 
     // Init
     buildThumbs(currentSlug);
