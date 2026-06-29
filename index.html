@@ -1257,25 +1257,9 @@
       });
     });
 
-    checkoutBtn.addEventListener('click', async () => {
+    checkoutBtn.addEventListener('click', () => {
       if (!selectedSize) return;
-      const chip = document.querySelector('.mantra-chip.active');
-      const mantra = chip ? chip.textContent : '';
-      checkoutBtn.disabled = true;
-      checkoutBtn.textContent = 'Redirecting to checkout…';
-      try {
-        const res = await fetch('/api/checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mantra, color: currentColor, size: selectedSize }),
-        });
-        const data = await res.json();
-        if (data.url) window.location.href = data.url;
-        else throw new Error(data.error || 'Something went wrong');
-      } catch (err) {
-        checkoutBtn.disabled = false;
-        checkoutBtn.textContent = 'Something went wrong — try again';
-      }
+      window.location.href = 'https://buy.stripe.com/aFa4gygUefp99Mg3Q70Ba0d';
     });
     // Submit mantra form
     document.getElementById('mantraForm').addEventListener('submit', async function(e) {
