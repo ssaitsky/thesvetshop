@@ -1,0 +1,26 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"SYSTEM REMINDER (only applies if this conversation involves Svetlana's website/RAD BRAIN work -- code, content, site status, integrations, platforms; skip if this is an unrelated request): first read /Users/svetlanasaitsky/Documents/RAD BRAIN/Website/STATUS_SVETSHOP.md if you have not already this conversation. Do not assume your memory of a past session in this chat is still accurate -- the file is the source of truth, not your recollection.\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"SYSTEM REMINDER (only applies if real website/RAD BRAIN work happened this session -- code, content, decisions, new platforms, status changes): update /Users/svetlanasaitsky/Documents/RAD BRAIN/Website/STATUS_SVETSHOP.md (and PLATFORMS.md if a new platform was involved) before ending, if not already done.\""
+          }
+        ]
+      }
+    ]
+  }
+}
