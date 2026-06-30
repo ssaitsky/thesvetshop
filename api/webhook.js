@@ -3,6 +3,8 @@ const PRINTFUL_STORE_ID = process.env.PRINTFUL_STORE_ID;
 const STRIPE_WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 const RESEND_API_KEY = process.env.Resend_API_Key;
 const NOTIFY_EMAIL = 'svetlana.thisisit@gmail.com';
+const KIT_API_KEY = 'dpE-uwyWSSgKcXkZQyJ-cw';
+const KIT_PURCHASE_TAG = 'Svet Shop Purchase';
 
 // Printful product template IDs — one per mantra+color combo
 // Mantra text (lowercase) → { blue: templateId, black: templateId }
@@ -80,6 +82,60 @@ async function createPrintfulOrder(session) {
   return data;
 }
 
+async function findOrCreateTag(tagName) {
+  const res = await fetch(`https://api.convertkit.com/v3/tags?api_key=${KIT_API_KEY}`);
+  const data = await res.json();
+  const existing = (data.tags || []).find(t => t.name.toLowerCase() === tagName.toLowerCase());
+  if (existing) return existing.id;
+  const create = await fetch('https://api.convertkit.com/v3/tags', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ api_key: KIT_API_KEY, tag: { name: tagName } }),
+  });
+  const createData = await create.json();
+  return createData.id;
+}
+
+async function tagPurchaser(email, mantra) {
+  const tagId = await findOrCreateTag(KIT_PURCHASE_TAG);
+  if (!tagId) return;
+  await fetch(`https://api.convertkit.com/v3/tags/${tagId}/subscribe`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      api_key: KIT_API_KEY,
+      email,
+      fields: { last_mantra_purchased: mantra },
+    }),
+  });
+}
+
+async function sendPurchaseNotification(session) {
+  if (!RESEND_API_KEY) return;
+  const meta = session.metadata || {};
+  const email = session.customer_details?.email || session.customer_email || 'unknown';
+  const amount = session.amount_total ? (session.amount_total / 100).toFixed(2) : 'unknown';
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: 'The Svet Shop <hello@thesvetshop.com>',
+      to: NOTIFY_EMAIL,
+      subject: `New order: ${meta.mantra || 'Mantra Tee'}`,
+      html: `<p>New Svet Shop order.</p>
+             <p><strong>Email:</strong> ${email}<br>
+             <strong>Mantra:</strong> ${meta.mantra || 'unknown'}<br>
+             <strong>Color:</strong> ${meta.color || 'unknown'}<br>
+             <strong>Size:</strong> ${meta.size || 'unknown'}<br>
+             <strong>Paid:</strong> $${amount}<br>
+             <strong>Session ID:</strong> ${session.id}</p>`,
+    }),
+  });
+}
+
 async function sendFailureEmail(session) {
   if (!RESEND_API_KEY) return;
   const meta = session.metadata || {};
@@ -124,6 +180,19 @@ export default async function handler(req, res) {
       console.log('Printful order created:', order?.result?.id);
     } catch (err) {
       console.error('Printful order failed:', err.message);
+    }
+
+    const email = session.customer_details?.email || session.customer_email;
+    try {
+      if (email) await tagPurchaser(email, session.metadata?.mantra || '');
+    } catch (err) {
+      console.error('Kit tagging failed:', err.message);
+    }
+
+    try {
+      await sendPurchaseNotification(session);
+    } catch (err) {
+      console.error('Purchase notification failed:', err.message);
     }
   }
 
