@@ -17,6 +17,9 @@ const PRODUCT_TEMPLATES = {
   'flexibility is opportunity':                          { blue: '104408441', black: '104409521' },
   'i stabilize at a magical frequency':                  { blue: '104408650', black: '104409410' },
   'the more i slow down the more time i seem to have':  { blue: '104408850', black: '104409048' },
+  "you're never ready till you do it":                  { blue: '104505284', black: '104504901' },
+  'if you say you don\'t have five minutes you gotta do it for a fucking hour': { blue: '104505311', black: '104505024' },
+  "let's eat some meat together":                       { blue: '104505598', black: '104505235' },
 };
 
 function getTemplateId(mantra, color) {
